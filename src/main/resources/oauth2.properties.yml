@@ -1,0 +1,10 @@
+security:
+  oauth2:
+    client:
+      messaging-app-client:
+        client-id: messaging-app-client
+        client-secret: secret
+        user-authorization-uri: ${server.url}/oauth/authorize
+        access-token-uri: ${server.url}/oauth/token
+        scope: message.read, message.write
+        pre-established-redirect-uri: ${server.url}/messaging
