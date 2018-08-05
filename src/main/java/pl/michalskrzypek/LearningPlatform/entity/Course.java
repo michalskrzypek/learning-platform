@@ -23,7 +23,11 @@ public class Course {
     @ManyToOne
     private Category category;
 
-    private List<String> tags;
+    @ManyToMany
+    @JoinTable(name = "course_tag",
+    joinColumns = @JoinColumn(name = "course_id"),
+    inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> tags;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,

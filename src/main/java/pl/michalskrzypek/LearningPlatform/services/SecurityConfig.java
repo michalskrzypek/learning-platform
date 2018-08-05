@@ -7,7 +7,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -24,10 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/resources/**"
     };
 
-    @SuppressWarnings("deprecation")
     @Bean
-    public static NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override
@@ -64,8 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("123").roles("USER");
-        auth.inMemoryAuthentication().withUser("inst").password("123").roles("INSTRUCTOR");
+        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("user").password("123").roles("USER");
+        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("inst").password("123").roles("INSTRUCTOR");
         auth.userDetailsService(userService);
     }
 
