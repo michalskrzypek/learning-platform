@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -30,4 +31,7 @@ public class Review {
 
     @NotNull
     private String comment;
+
+    @NotNull
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

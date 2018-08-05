@@ -44,6 +44,4 @@ public class Course {
     @JoinColumn(name = "course_id")
     @OneToMany(cascade = CascadeType.ALL)
     private List<Review> reviews;
-
-
 }

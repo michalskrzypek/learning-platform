@@ -1,4 +1,4 @@
-package pl.michalskrzypek.LearningPlatform.services;
+package pl.michalskrzypek.LearningPlatform.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import pl.michalskrzypek.LearningPlatform.services.UserService;
 
 @Configuration
 @EnableWebSecurity

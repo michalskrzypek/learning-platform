@@ -1,7 +1,5 @@
 package pl.michalskrzypek.LearningPlatform.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -25,15 +23,20 @@ public class User implements UserDetails, Serializable {
     @NotNull
     @Column(unique = true)
     private String email;
+
     @NotNull
     private String password;
+
     @NotNull
     private String firstName;
+
     @NotNull
     private String lastName;
+
     @NotNull
     private String role;
-    private boolean expired;
+
+    private boolean expired = false;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Review> reviews;
