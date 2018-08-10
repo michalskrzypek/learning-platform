@@ -1,5 +1,6 @@
 package pl.michalskrzypek.LearningPlatform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -38,15 +39,18 @@ public class User implements UserDetails, Serializable {
 
     private boolean expired = false;
 
+    @JsonIgnore()
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Review> reviews;
 
+    @JsonIgnore()
     @ManyToMany
     @JoinTable(name = "course_student",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> assigned_courses;
 
+    @JsonIgnore()
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "instructor",
             cascade = {CascadeType.DETACH, CascadeType.MERGE,

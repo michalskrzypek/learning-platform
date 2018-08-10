@@ -8,13 +8,27 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
+import java.util.Collections;
+import java.util.Map;
+
+@RestController
 @SpringBootApplication
 public class LearningPlatformApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LearningPlatformApplication.class, args);
 	}
+
+/*	@RequestMapping("/user")
+	public Principal user(Principal user) {
+		return user;
+	}
+*/
 
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer properties() {
