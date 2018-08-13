@@ -2,7 +2,7 @@ package pl.michalskrzypek.LearningPlatform.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.michalskrzypek.LearningPlatform.entity.User;
+import pl.michalskrzypek.LearningPlatform.entities.User;
 
 import java.util.List;
 

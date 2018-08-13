@@ -1,4 +1,4 @@
-package pl.michalskrzypek.LearningPlatform.model;
+package pl.michalskrzypek.LearningPlatform.dtos;
 
 import lombok.Data;
 

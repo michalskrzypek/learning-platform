@@ -6,7 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-import pl.michalskrzypek.LearningPlatform.entity.User;
+import pl.michalskrzypek.LearningPlatform.entities.User;
 
 import java.io.Serializable;
 import java.util.Arrays;

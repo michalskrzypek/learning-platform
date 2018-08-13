@@ -8,7 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-import pl.michalskrzypek.LearningPlatform.entity.User;
+import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.services.UserService;
 import pl.michalskrzypek.LearningPlatform.utils.JWTTokenUtil;
 

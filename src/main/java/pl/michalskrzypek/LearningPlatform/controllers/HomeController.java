@@ -1,4 +1,4 @@
-package pl.michalskrzypek.LearningPlatform.controller;
+package pl.michalskrzypek.LearningPlatform.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

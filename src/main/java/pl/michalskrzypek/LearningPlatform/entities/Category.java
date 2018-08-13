@@ -1,4 +1,4 @@
-package pl.michalskrzypek.LearningPlatform.entity;
+package pl.michalskrzypek.LearningPlatform.entities;
 
 
 import lombok.Data;

@@ -1,6 +1,6 @@
 package pl.michalskrzypek.LearningPlatform.common;
 
-import pl.michalskrzypek.LearningPlatform.entity.User;
+import pl.michalskrzypek.LearningPlatform.entities.User;
 
 public class Roles {
 

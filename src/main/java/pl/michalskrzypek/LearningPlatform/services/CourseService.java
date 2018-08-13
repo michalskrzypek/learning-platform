@@ -1,7 +1,7 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
 import org.springframework.stereotype.Service;
-import pl.michalskrzypek.LearningPlatform.entity.Course;
+import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 
 import java.util.List;
