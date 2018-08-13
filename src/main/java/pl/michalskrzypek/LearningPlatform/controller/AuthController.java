@@ -8,7 +8,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import pl.michalskrzypek.LearningPlatform.common.AuthToken;
 import pl.michalskrzypek.LearningPlatform.entity.User;
+import pl.michalskrzypek.LearningPlatform.model.LoginUser;
 import pl.michalskrzypek.LearningPlatform.services.UserService;
 import pl.michalskrzypek.LearningPlatform.utils.JWTTokenUtil;
 
@@ -26,20 +28,18 @@ public class AuthController {
     private UserService userService;
 
     @PostMapping(value = "/generate-token")
-    public ResponseEntity register(@RequestBody User user) throws AuthenticationException {
-
-        System.out.print("JESTEM TU");
+    public ResponseEntity register(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        user.getUsername(),
-                        user.getPassword()
+                        loginUser.getUsername(),
+                        loginUser.getPassword()
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final User authenticatedUser = (User) userService.loadUserByUsername(user.getUsername());
+        final User authenticatedUser = (User) userService.loadUserByUsername(loginUser.getUsername());
         final String token = jwtTokenUtil.generateToken(authenticatedUser);
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new AuthToken(token));
     }
 
 }

@@ -43,7 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().passwordEncoder(encoder()).withUser("user").password("123").roles("ADMIN");
         auth.userDetailsService(userService)
                 .passwordEncoder(encoder());
     }
@@ -55,9 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http/*.cors().and().csrf().disable()*/
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/token/**").permitAll()
+                .antMatchers("/token/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
