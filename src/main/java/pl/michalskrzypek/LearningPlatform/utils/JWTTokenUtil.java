@@ -1,18 +1,14 @@
 package pl.michalskrzypek.LearningPlatform.utils;
 
-import com.sun.org.apache.xml.internal.security.algorithms.SignatureAlgorithm;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import pl.michalskrzypek.LearningPlatform.entity.User;
-import io.jsonwebtoken.Claims;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.function.Function;
 
 /**
  * Following is the util class to generate the auth token as well as to extract username from the token.
@@ -56,7 +52,7 @@ public class JWTTokenUtil implements Serializable {
                 .setIssuer("http://michalskrzypek.la.pl")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenValiditySeconds*1000))
-                .signWith(io.jsonwebtoken.SignatureAlgorithm.ES256, signingKey)
+                .signWith(SignatureAlgorithm.HS256, signingKey)
                 .compact();
     }
 
