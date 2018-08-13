@@ -1,6 +1,8 @@
 package pl.michalskrzypek.LearningPlatform.utils;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -31,6 +33,7 @@ public class JWTTokenUtil implements Serializable {
     }
 
     private Claims getAllClaimsFromToken(String token) {
+
         return Jwts.parser()
                 .setSigningKey(signingKey)
                 .parseClaimsJws(token)
@@ -51,7 +54,7 @@ public class JWTTokenUtil implements Serializable {
                 .setClaims(claims)
                 .setIssuer("http://michalskrzypek.la.pl")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenValiditySeconds*1000))
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenValiditySeconds * 1000))
                 .signWith(SignatureAlgorithm.HS256, signingKey)
                 .compact();
     }
