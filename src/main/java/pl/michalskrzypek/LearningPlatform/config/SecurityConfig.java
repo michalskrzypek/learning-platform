@@ -3,20 +3,29 @@ package pl.michalskrzypek.LearningPlatform.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.michalskrzypek.LearningPlatform.services.UserService;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JWTAuthenticationEntryPoint unauthorizedHandler;
 
     private static final String LOGIN_URL = "/login";
 
@@ -26,48 +35,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/resources/**"
     };
 
+    @Override
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Autowired
+    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().passwordEncoder(encoder()).withUser("user").password("123").roles("ADMIN");
+        auth.userDetailsService(userService)
+                .passwordEncoder(encoder());
+    }
+
+    @Bean
+    public JWTAuthenticationFilter authenticationTokenFilterBean() throws Exception {
+        return new JWTAuthenticationFilter();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http
+        http/*.cors().and().csrf().disable()*/
                 .authorizeRequests()
-                .anyRequest().authenticated().and().formLogin().and().logout().permitAll();
-
-
-           /*     .antMatchers(PERMIT_URLS).permitAll()
+                .antMatchers("/token/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().defaultSuccessUrl(LOGIN_URL).loginPage(LOGIN_URL).permitAll()
-                .and().oauth2Login().and()
-                .logout().permitAll();
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-
-                .successHandler(authenticationSuccessHandler)
-                .failureHandler(new AuthenticationFailureHandler())
-                .and().logout()
-                .logoutSuccessHandler(noRedirectAfterLogoutHandler)
-                .permitAll();
-
-      http
-                .exceptionHandling()
-                .authenticationEntryPoint(new AuthenticationEntryPoint(LOGIN_URL));*/
+        http
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
     }
 
-    /*    @Override
-        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.authenticationProvider(createActiveDirectoryAuthProvider());
-        }*/
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("user").password("123").roles("USER");
-        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder()).withUser("inst").password("123").roles("INSTRUCTOR");
-        auth.userDetailsService(userService);
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
