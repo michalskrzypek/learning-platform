@@ -33,14 +33,17 @@ public class AuthController {
     @PostMapping(value = "/generate-token")
     public ResponseEntity register(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
+        String username = loginUser.getUsername();
+        String password = loginUser.getPassword();
+
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginUser.getUsername(),
-                        loginUser.getPassword()
+                        username,
+                        password
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final User authenticatedUser = (User) userService.loadUserByUsername(loginUser.getUsername());
+        final User authenticatedUser = (User) userService.loadUserByUsername(username);
         final String token = jwtTokenUtil.generateToken(authenticatedUser);
         return ResponseEntity.ok(new AuthToken(token));
     }

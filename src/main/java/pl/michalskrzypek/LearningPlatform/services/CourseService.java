@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,7 +17,11 @@ public class CourseService {
     }
 
     public List<Course> findAll(){
-        return courseRepository.findAll();
+
+        List<Course> allCourses = new ArrayList<>();
+        courseRepository.findAll().forEach(c -> allCourses.add(c));
+
+        return allCourses;
     }
 
 }

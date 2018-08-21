@@ -38,29 +38,33 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+
         String header = req.getHeader(headerString);
         String username = null;
         String authToken = null;
+
         if (header != null && header.startsWith(tokenPrefix)) {
             authToken = header.replace(tokenPrefix, "");
             try {
                 username = JWTTokenUtil.getUsernameFromToken(authToken);
             } catch (IllegalArgumentException e) {
-                logger.error("an error occured during getting username from token", e);
+                logger.error("An error occurred during getting username from token", e);
             } catch (ExpiredJwtException e) {
-                logger.warn("the token is expired and not valid anymore", e);
+                logger.warn("This token has expired and is not longer valid", e);
             }
         } else {
-            logger.warn("couldn't find bearer string, will ignore the header");
+            logger.warn("Can't find bearer string, no JWT put in request header!");
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             User user = (User) userService.loadUserByUsername(username);
 
             if (JWTTokenUtil.validateToken(authToken, user)) {
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(user,null,
+                        Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                logger.info("authenticated user " + username + ", setting security context");
+                logger.info("Authenticated user " + username + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

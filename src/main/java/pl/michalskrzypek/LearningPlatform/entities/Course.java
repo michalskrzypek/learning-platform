@@ -19,6 +19,7 @@ public class Course {
     @Column(unique = true)
     private String title;
 
+    @NotNull
     @JoinColumn(name = "category_id")
     @ManyToOne
     private Category category;
@@ -29,6 +30,7 @@ public class Course {
     inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tags;
 
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})

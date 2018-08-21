@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -15,7 +15,7 @@ public class Tag {
     private Long id;
 
     @Column(unique = true)
-    @NotBlank
+    @NotNull
     private String name;
 
     @Min(value = 0)

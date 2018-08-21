@@ -1,23 +1,8 @@
 package pl.michalskrzypek.LearningPlatform.common;
 
+import lombok.Data;
+
+@Data
 public class AuthToken {
-
-    private String token;
-
-    public AuthToken(){
-
-    }
-
-    public AuthToken(String token){
-        this.token = token;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
+    private final String token;
 }

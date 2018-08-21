@@ -20,10 +20,6 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User user;
 
-    /*@ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;*/
-
     @NotNull
     @Min(value = 1)
     @Max(value = 5)
