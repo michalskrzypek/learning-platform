@@ -20,7 +20,6 @@ public class CourseService {
 
         List<Course> allCourses = new ArrayList<>();
         courseRepository.findAll().forEach(c -> allCourses.add(c));
-
         return allCourses;
     }
 

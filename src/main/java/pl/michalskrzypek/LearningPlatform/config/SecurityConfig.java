@@ -25,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JWTAuthenticationEntryPoint unauthorizedHandler;
 
+    @Autowired
+    public JWTAuthenticationFilter authenticationTokenFilterBean;
+
     private static final String LOGIN_URL = "/login";
 
     private static final String[] PERMIT_URLS = {
@@ -39,20 +42,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService)
                 .passwordEncoder(encoder());
     }
 
-    @Bean
-    public JWTAuthenticationFilter authenticationTokenFilterBean() throws Exception {
-        return new JWTAuthenticationFilter();
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/token/*").permitAll()
                 .anyRequest().authenticated()
@@ -61,12 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
-                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationTokenFilterBean, UsernamePasswordAuthenticationFilter.class);
     }
-
-    @Bean
-    public BCryptPasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 }

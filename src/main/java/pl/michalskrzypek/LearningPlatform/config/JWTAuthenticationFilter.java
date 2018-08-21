@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.services.UserService;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 /**
  * This class checks for the authorization header and authenticates the JWT token and sets the authentication in the context.
  */
+@Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired

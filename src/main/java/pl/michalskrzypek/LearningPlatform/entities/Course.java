@@ -21,7 +21,8 @@ public class Course {
 
     @NotNull
     @JoinColumn(name = "category_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
     private Category category;
 
     @ManyToMany
