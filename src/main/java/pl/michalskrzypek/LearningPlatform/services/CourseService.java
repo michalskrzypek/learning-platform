@@ -23,4 +23,8 @@ public class CourseService {
         return allCourses;
     }
 
+    public Course findById(Long id){
+        return courseRepository.findById(id).get();
+    }
+
 }
