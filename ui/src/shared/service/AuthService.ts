@@ -10,9 +10,9 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  attempAuth(username: string, password: string): Observable<any> {
+  login(username: string, password: string): Observable<any> {
     const credentials = {username: username, password: password};
-    return this.http.post(generateTokenUrl, credentials);
+    return this.http.post(generateTokenUrl, credentials).shareReplay();;
   }
 
 }

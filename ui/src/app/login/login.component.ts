@@ -17,7 +17,7 @@ export class LoginComponent {
   }
 
   login(): void {
-    this.authService.attempAuth(this.credentials.username, this.credentials.password).subscribe(
+    this.authService.login(this.credentials.username, this.credentials.password).subscribe(
       data => {
         this.token.saveToken(data.token);
         console.log(data.token);
