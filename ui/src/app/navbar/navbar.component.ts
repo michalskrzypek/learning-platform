@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TokenStorage} from "../../shared/authentication/TokenStorage";
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tokenStorage : TokenStorage) { }
 
   ngOnInit() {
+  }
+
+  isAuthenticated() {
+    if (this.tokenStorage.getToken() != null) {
+      return true;
+    }
+    return false;
   }
 
 }

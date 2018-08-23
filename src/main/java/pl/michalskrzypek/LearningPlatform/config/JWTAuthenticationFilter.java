@@ -55,7 +55,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 logger.warn("This token has expired and is not longer valid", e);
             }
         } else {
-            logger.warn("Can't find bearer string, no JWT put in request header!");
+            logger.warn("There is no JWT put in the request header!");
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 

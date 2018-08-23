@@ -15,13 +15,14 @@ export class HomeComponent implements OnInit {
 
   courses = {}
 
-  constructor(private coursesService: CourseService, private http: HttpClient, private authService: AuthService, private tokenStorage: TokenStorage) {
-    coursesService.findAll().subscribe(data => {
-      this.courses = data;
-    })
+  constructor(private coursesService: CourseService, private tokenStorage: TokenStorage) {
+
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.coursesService.findAll().subscribe(data => {
+      this.courses = data;
+    })
   }
 
   isAuthenticated() {

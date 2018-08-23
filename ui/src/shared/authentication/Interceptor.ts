@@ -6,27 +6,31 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import {Observable} from "rxjs/Observable";
 import {TokenStorage} from "./TokenStorage";
-import {AuthService} from "../service/AuthService";
 
 const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-  constructor(private token: TokenStorage, private router: Router, private authService: AuthService) {
+  constructor(private token: TokenStorage, private router: Router) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("I AM HERE");
+
     let authReq = req;
-    if (this.token.getToken() != null) {
+    let userToken : string = this.token.getToken();
+
+    if (userToken != null) {
       authReq = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + this.token.getToken())});
     }
-    return next.handle(authReq).do(
-      (error: any) => {
-        if (error instanceof HttpErrorResponse) {
-          if (error.status == 401) {//user unauthorized
-            this.token.signOut();
+
+    return next.handle(authReq).do((event : HttpEvent<any>) => {},
+      (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status == 401) {//user unauthorized
+            this.token.removeToken();
+            this.router.navigate(['login']);
+          } else if (err.status == 403) {//content forbidden
             this.router.navigate(['login']);
           }
         }

@@ -8,7 +8,7 @@ export class TokenStorage {
 
   constructor() { }
 
-  signOut() {
+  removeToken() {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.clear();
   }

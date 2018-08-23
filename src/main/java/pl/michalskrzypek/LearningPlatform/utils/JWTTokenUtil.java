@@ -27,33 +27,13 @@ public class JWTTokenUtil implements Serializable {
     @Value("${ACCESS_TOKEN_VALIDITY_SECONDS}")
     private int accessTokenValiditySeconds;
 
-    public String getUsernameFromToken(String token) {
-        return getAllClaimsFromToken(token).getSubject();
-    }
-
-    public Date getExpirationDateFromToken(String token) {
-        return getAllClaimsFromToken(token).getExpiration();
-    }
-
-    private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(signingKey)
-                .parseClaimsJws(token)
-                .getBody();
-    }
-
-    private Boolean isTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token);
-        return expiration.before(new Date());
-    }
-
     public String generateToken(User user) {
 
         Claims claims = Jwts.claims();
         claims.setSubject(user.getEmail());
-        List<GrantedAuthority> userAuthorities = new ArrayList<>();
-        user.getAuthorities().stream().forEach(authority -> userAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority())));
-        claims.put("scopes", Arrays.asList(userAuthorities));
+        /*List<GrantedAuthority> userAuthorities = new ArrayList<>();
+        user.getAuthorities().stream().forEach(authority -> userAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority())));*/
+        claims.put("scope", user.getRole());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -71,4 +51,23 @@ public class JWTTokenUtil implements Serializable {
                         && !isTokenExpired(token));
     }
 
+    private Boolean isTokenExpired(String token) {
+        final Date expiration = getExpirationDateFromToken(token);
+        return expiration.before(new Date());
+    }
+
+    public String getUsernameFromToken(String token) {
+        return getAllClaimsFromToken(token).getSubject();
+    }
+
+    public Date getExpirationDateFromToken(String token) {
+        return getAllClaimsFromToken(token).getExpiration();
+    }
+
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(signingKey)
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }

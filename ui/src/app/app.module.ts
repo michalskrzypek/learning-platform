@@ -38,8 +38,13 @@ import {AuthService} from "../shared/service/AuthService";
       {path: "login", component: LoginComponent}
     ])
   ],
-  providers: [CourseService, TokenStorage, AuthService,
-    {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}
+  providers: [
+    CourseService,
+    TokenStorage,
+    AuthService,
+    {provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi: true}
   ],
   bootstrap: [AppComponent]
 })
