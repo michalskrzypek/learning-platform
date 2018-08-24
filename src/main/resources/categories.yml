@@ -1,7 +1,8 @@
 categories:
-    - key: FIRST
+  categoryMap:
+    - key: WEBDEV
       name: Web Development
-    - key: SECOND
+    - key: GAMEDEV
       name: Game Development
-    - key: THIRD
+    - key: BUSINESS
       name: Business

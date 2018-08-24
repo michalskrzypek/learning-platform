@@ -1,11 +1,16 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.michalskrzypek.LearningPlatform.entity.User;
+import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.repositories.UserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -21,10 +26,22 @@ public class UserService implements UserDetailsService {
 
         User user = userRepository.findByEmail(s);
 
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("User " + user.getUsername() + " does not exist!");
         }
 
         return user;
+    }
+
+    public List<User> findAll() {
+
+        List<User> allUsers = new ArrayList<>();
+        userRepository.findAll().forEach(u -> allUsers.add(u));
+
+        return allUsers;
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 }

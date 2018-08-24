@@ -1,0 +1,23 @@
+<html>
+<head>
+
+</head>
+
+<body>
+<p>
+  home works!
+</p>
+
+
+<input [(ngModel)]="email" type="text" id="email" name="email"/>
+
+<p> {{email}}</p>
+
+<div [hidden]="!isAuthenticated()">
+  <div *ngFor="let course of courses">
+    {{course.title}}
+  </div>
+</div>
+
+</body>
+</html>
