@@ -12,7 +12,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<any> {
     const credentials = {username: username, password: password};
-    return this.http.post(generateTokenUrl, credentials).shareReplay();;
+    return this.http.post(generateTokenUrl, credentials);
   }
 
 }

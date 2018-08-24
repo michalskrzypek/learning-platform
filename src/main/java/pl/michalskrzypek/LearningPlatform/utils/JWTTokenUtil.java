@@ -31,8 +31,6 @@ public class JWTTokenUtil implements Serializable {
 
         Claims claims = Jwts.claims();
         claims.setSubject(user.getEmail());
-        /*List<GrantedAuthority> userAuthorities = new ArrayList<>();
-        user.getAuthorities().stream().forEach(authority -> userAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority())));*/
         claims.put("scope", user.getRole());
 
         return Jwts.builder()

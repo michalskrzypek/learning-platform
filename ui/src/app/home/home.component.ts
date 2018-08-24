@@ -25,10 +25,15 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  showCourses():void {
+
+  }
+
   isAuthenticated() {
     if (this.tokenStorage.getToken() != null) {
       return true;
     }
+    this.tokenStorage.removeToken();
     return false;
   }
 }
