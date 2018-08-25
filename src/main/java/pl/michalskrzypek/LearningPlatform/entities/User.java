@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class User implements UserDetails, Serializable {
 
     @Id
@@ -24,7 +24,6 @@ public class User implements UserDetails, Serializable {
 
     @NotNull
     @Email
-    @Column(unique = true)
     private String email;
 
     @NotNull
