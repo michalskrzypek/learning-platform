@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from "../../shared/model/User";
 
 @Component({
   selector: 'app-signup',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
+  newUser = new User();
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  signup() {
+    console.log(this.newUser)
+  }
 }

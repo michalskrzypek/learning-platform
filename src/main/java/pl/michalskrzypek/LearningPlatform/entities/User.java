@@ -41,18 +41,18 @@ public class User implements UserDetails, Serializable {
 
     private boolean expired = false;
 
-    @JsonIgnore()
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Review> reviews;
 
-    @JsonIgnore()
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "course_student",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> assigned_courses;
 
-    @JsonIgnore()
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "instructor",
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
@@ -64,6 +64,7 @@ public class User implements UserDetails, Serializable {
         return AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER", "ROLE_INSTRUCTOR");
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return this.getEmail();

@@ -19,16 +19,22 @@
 
         <div class="form-group">
           <input type="email" class="form-control" id="email" placeholder="example@lp.com"
-                 [(ngModel)]="credentials.username" name="email">
+                 [(ngModel)]="newUser.email" name="email">
 
           <input type="password" class="form-control" id="inputPassword" placeholder="Password"
-                 [(ngModel)]="credentials.password" name="password">
+                 [(ngModel)]="newUser.password" name="password">
 
           <input type="text" class="form-control" placeholder="First name"
-                 [(ngModel)]="credentials.password" name="password">
+                 [(ngModel)]="newUser.firstName" name="firstName">
 
-          <input type="password" class="form-control" id="inputPassword" placeholder="Password"
-                 [(ngModel)]="credentials.password" name="password">
+          <input type="text" class="form-control" placeholder="Last name"
+                 [(ngModel)]="newUser.lastName" name="lastName">
+
+          <input type="radio" class="form-control"
+                 [(ngModel)]="newUser.role" name="role" value="ROLE_USER" checked>User
+
+          <input type="radio" class="form-control"
+                 [(ngModel)]="newUser.role" name="role" value="ROLE_INSTRUCTOR">Instructor
         </div>
 
 

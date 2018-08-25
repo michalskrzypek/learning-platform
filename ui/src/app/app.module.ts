@@ -37,7 +37,8 @@ import { SignupComponent } from './signup/signup.component';
       {path: '', pathMatch: 'full', redirectTo: 'home'},
       {path: "home", component: HomeComponent},
       {path: "course/:id", component: CourseDetailsComponent},
-      {path: "login", component: LoginComponent}
+      {path: "login", component: LoginComponent},
+      {path: "signup", component: SignupComponent}
     ])
   ],
   providers: [
