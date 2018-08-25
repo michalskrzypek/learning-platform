@@ -1,8 +1,12 @@
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Injectable} from "@angular/core";
+import {User} from "../model/User";
+import {GlobalVariable} from "../util/Globals";
+import {LoginUser} from "../model/LoginUser";
 
-const generateTokenUrl: string = "http://localhost:8080/token/generate-token"
+const generateTokenURL: string = GlobalVariable.BASE_API_URL+"/token/generate-token"
+const registerUserURL: string = GlobalVariable.BASE_API_URL+"/register/user"
 
 @Injectable()
 export class AuthService {
@@ -10,9 +14,11 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  login(username: string, password: string): Observable<any> {
-    const credentials = {username: username, password: password};
-    return this.http.post(generateTokenUrl, credentials);
+  login(loginUser: LoginUser): Observable<any> {
+    return this.http.post(generateTokenURL, loginUser);
   }
 
+  signup(user: User) : Observable<any> {
+    return this.http.post(registerUserURL, user);
+  }
 }

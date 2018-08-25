@@ -8,6 +8,7 @@ import pl.michalskrzypek.LearningPlatform.services.UserService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired

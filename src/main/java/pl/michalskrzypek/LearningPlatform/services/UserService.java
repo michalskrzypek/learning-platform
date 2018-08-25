@@ -1,10 +1,12 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.michalskrzypek.LearningPlatform.dtos.UserDto;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.repositories.UserRepository;
 
@@ -15,11 +17,11 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
 
+    @Autowired
     private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -43,5 +45,17 @@ public class UserService implements UserDetailsService {
 
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
+    }
+
+    public User saveUser(UserDto newUser){
+
+        User registeredUser = new User();
+        registeredUser.setEmail(newUser.getEmail());
+        registeredUser.setPassword(encoder.encode(newUser.getPassword()));
+        registeredUser.setFirstName(newUser.getFirstName());
+        registeredUser.setLastName(newUser.getLastName());
+        registeredUser.setRole(newUser.getRole());
+
+        return userRepository.save(registeredUser);
     }
 }
