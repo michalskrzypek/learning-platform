@@ -28,7 +28,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/generate-token")
+    @PostMapping("/generate-token")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public AuthToken authenticateUser(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
@@ -47,6 +47,4 @@ public class AuthController {
         final String token = jwtTokenUtil.generateToken(authenticatedUser);
         return new AuthToken(token);
     }
-
-
 }

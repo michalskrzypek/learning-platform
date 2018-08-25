@@ -12,21 +12,27 @@
   <div class="login-form">
     <div class="main-div">
       <div class="panel">
-        <h2>Login</h2>
+        <h2>Sign up</h2>
         <p>Please enter your email and password</p>
       </div>
-      <form id="Login" (submit)="login()">
+      <form id="Signup" (submit)="signup()">
 
         <div class="form-group">
           <input type="email" class="form-control" id="email" placeholder="example@lp.com"
-                 [(ngModel)]="loginUser.username" name="email">
+                 [(ngModel)]="credentials.username" name="email">
 
           <input type="password" class="form-control" id="inputPassword" placeholder="Password"
-                 [(ngModel)]="loginUser.password" name="password">
+                 [(ngModel)]="credentials.password" name="password">
+
+          <input type="text" class="form-control" placeholder="First name"
+                 [(ngModel)]="credentials.password" name="password">
+
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password"
+                 [(ngModel)]="credentials.password" name="password">
         </div>
 
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Register</button>
 
       </form>
     </div>

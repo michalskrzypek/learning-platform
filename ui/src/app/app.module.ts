@@ -15,6 +15,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {TokenStorage} from "../shared/authentication/TokenStorage";
 import {Interceptor} from "../shared/authentication/Interceptor";
 import {AuthService} from "../shared/service/AuthService";
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import {AuthService} from "../shared/service/AuthService";
     CourseItemComponent,
     CourseDetailsComponent,
     LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

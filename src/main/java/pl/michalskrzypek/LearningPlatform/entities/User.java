@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
@@ -22,6 +23,7 @@ public class User implements UserDetails, Serializable {
     private Long id;
 
     @NotNull
+    @Email
     @Column(unique = true)
     private String email;
 
