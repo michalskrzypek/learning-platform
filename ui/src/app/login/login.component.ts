@@ -18,7 +18,7 @@ export class LoginComponent {
   }
 
   login(): void {
-    this.authService.login(this.loginUser.username, this.loginUser.password).subscribe(
+    this.authService.login(this.loginUser).subscribe(
       data => {
         this.token.saveToken(data.token);
         console.log(data.token);
