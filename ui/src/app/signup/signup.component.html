@@ -13,7 +13,7 @@
     <div class="main-div">
       <div class="panel">
         <h1>Sign up</h1>
-      <br>
+        <br>
       </div>
       <form id="Signup" (submit)="signup()">
 
@@ -29,13 +29,17 @@
 
           <input type="text" class="form-control" placeholder="Last name"
                  [(ngModel)]="newUser.lastName" name="lastName">
-          <div class="form-group mb-2">
-          <input type="radio" class="form-control"
-                 [(ngModel)]="newUser.role" name="role" value="ROLE_USER" [checked]="true">User
-
-          <input type="radio" class="form-control"
-                 [(ngModel)]="newUser.role" name="role" value="ROLE_INSTRUCTOR">Instructor
-        </div>
+          </div>
+        <div class="form-group">
+          <label>Role: </label>
+          <div class="form-control">
+            <label class="radio-inline">
+              <input type="radio" [(ngModel)]="newUser.role" name="role" value="ROLE_USER">User
+            </label>
+            <label class="radio-inline">
+              <input type="radio" [(ngModel)]="newUser.role" name="role" value="ROLE_INSTRUCTOR">Instructor
+            </label>
+          </div>
         </div>
 
 

@@ -16,6 +16,8 @@ import {TokenStorage} from "../shared/authentication/TokenStorage";
 import {Interceptor} from "../shared/authentication/Interceptor";
 import {AuthService} from "../shared/service/AuthService";
 import { SignupComponent } from './signup/signup.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -29,22 +31,25 @@ import { SignupComponent } from './signup/signup.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
-    FormsModule,
+    BrowserAnimationsModule,
     CommonModule,
-    BrowserModule,
+    FormsModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {path: '', pathMatch: 'full', redirectTo: 'home'},
       {path: "home", component: HomeComponent},
       {path: "course/:id", component: CourseDetailsComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
-    ])
+    ]),
+    ToastrModule.forRoot({
+      timeOut: 2000
+    })
   ],
   providers: [
+    AuthService,
     CourseService,
     TokenStorage,
-    AuthService,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi: true}
