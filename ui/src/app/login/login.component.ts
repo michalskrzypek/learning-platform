@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../shared/service/AuthService";
-import {TokenStorage} from "../../shared/authentication/TokenStorage";
+import {TokenStorage} from "../../shared/TokenStorage";
 import {LoginUser} from "../../shared/model/LoginUser";
 import {ToastrService} from "ngx-toastr";
 
@@ -11,12 +11,19 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginUser = new LoginUser();
+  logoutParam: boolean;
 
   constructor(private authService: AuthService, private http: HttpClient, private router: Router, private token: TokenStorage,
-              private toastr: ToastrService) {
+              private toastr: ToastrService, private route: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
+    if(this.route.snapshot.queryParams["logout"] != null){
+      this.logoutParam = true;
+    }
   }
 
   login(): void {

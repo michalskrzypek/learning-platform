@@ -9,10 +9,13 @@
 <body id="LoginForm">
 
 <div class="container">
+  <div *ngIf="logoutParam" class="logout-div">
+    <p>You have been successfully logged out!</p>
+  </div>
   <div class="login-form">
     <div class="main-div">
       <div class="panel">
-        <h2>Login</h2>
+        <h1>Login</h1>
         <p>Please enter your email and password</p>
       </div>
       <form id="Login" (submit)="login()">
