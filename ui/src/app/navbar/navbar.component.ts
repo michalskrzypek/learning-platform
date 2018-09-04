@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {TokenStorage} from "../../shared/authentication/TokenStorage";
+import {TokenStorage} from "../../shared/TokenStorage";
 import {Router} from "@angular/router";
 
 @Component({

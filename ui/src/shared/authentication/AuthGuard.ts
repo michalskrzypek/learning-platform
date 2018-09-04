@@ -1,8 +1,8 @@
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs/Observable";
-import {TokenStorage} from "./authentication/TokenStorage";
 import {ToastrService} from "ngx-toastr";
 import {Injectable} from "@angular/core";
+import {TokenStorage} from "../TokenStorage";
 
 @Injectable()
 export class AuthGuard implements CanActivate {

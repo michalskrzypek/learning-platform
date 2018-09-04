@@ -7,6 +7,8 @@ import pl.michalskrzypek.LearningPlatform.dtos.UserDto;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.services.UserService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/register")
 public class RegistrationController {
@@ -16,7 +18,7 @@ public class RegistrationController {
 
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)
-    public User registerNewUser(@RequestBody UserDto newUser){
+    public User registerNewUser(@Valid @RequestBody UserDto newUser){
         return userService.saveUser(newUser);
     }
 }

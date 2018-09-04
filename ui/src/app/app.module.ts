@@ -43,7 +43,7 @@ import {ToastrModule} from "ngx-toastr";
       {path: "signup", component: SignupComponent}
     ]),
     ToastrModule.forRoot({
-      timeOut: 2000
+      timeOut: 3000
     })
   ],
   providers: [

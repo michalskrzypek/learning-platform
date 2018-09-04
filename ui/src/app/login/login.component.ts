@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthService} from "../../shared/service/AuthService";
-import {TokenStorage} from "../../shared/authentication/TokenStorage";
+import {TokenStorage} from "../../shared/TokenStorage";
 import {LoginUser} from "../../shared/model/LoginUser";
 import {ToastrService} from "ngx-toastr";
 

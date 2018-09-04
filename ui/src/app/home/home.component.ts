@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseService} from "../../shared/service/CourseService";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {AuthService} from "../../shared/service/AuthService";
-import {TokenStorage} from "../../shared/authentication/TokenStorage";
+import {TokenStorage} from "../../shared/TokenStorage";
 
 @Component({
   selector: 'app-home',
