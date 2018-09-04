@@ -13,7 +13,6 @@
     <div class="main-div">
       <div class="panel">
         <h1>Sign up</h1>
-        <br>
       </div>
       <form id="Signup" (submit)="signup()">
 
@@ -31,7 +30,7 @@
                  [(ngModel)]="newUser.lastName" name="lastName">
           </div>
         <div class="form-group">
-          <label>Role: </label>
+          <div class="panel"><h2>Role: </h2></div>
           <div class="form-control">
             <label class="radio-inline">
               <input type="radio" [(ngModel)]="newUser.role" name="role" value="ROLE_USER">User
