@@ -38,6 +38,22 @@ html{
   padding: 50px 70px 70px 71px;
 }
 
+.logout-div {
+  background: rgba(200,255,200,0.6) none repeat scroll 0 0;
+  border-radius: 2px;
+  max-width: 38%;
+  margin: 1em auto 0;
+  padding: 0.5em;
+  text-align: center;
+}
+
+.logout-div p{
+  font-style: italic;
+  font-weight: bold;
+  margin: 0;
+  color: #606060;
+}
+
 .login-form .form-group {
   margin-bottom: 10px;
 }

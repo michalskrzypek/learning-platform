@@ -9,6 +9,9 @@
 <body id="LoginForm">
 
 <div class="container">
+  <div *ngIf="logoutParam" class="logout-div">
+    <p>You have been successfully logged out!</p>
+  </div>
   <div class="login-form">
     <div class="main-div">
       <div class="panel">

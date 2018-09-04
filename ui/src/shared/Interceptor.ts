@@ -37,16 +37,16 @@ export class Interceptor implements HttpInterceptor {
 
     return next.handle(authReq).do((event: HttpEvent<any>) => {
       if(event instanceof HttpResponse) {
-        this.toastr.info(event.body);
       }},
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
           this.errorDetails = err.error;
           if (err.status == 401) {//user unauthorized
             this.token.removeToken();
+            this.toastr.show("Log in to see the content.")
             this.router.navigate(['login']);
           } else if (err.status == 403) {//content forbidden
-            this.router.navigate(['login']);
+            this.toastr.show("You have unsufficient rights to see the content.")
           } else if (err.status == 400) {//bad request for invalid form completion
             this.toastr.show(this.errorDetails.message);
           }

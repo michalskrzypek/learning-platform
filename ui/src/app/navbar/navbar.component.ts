@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
 
   logOut(){
     this.tokenStorage.removeToken();
-    this.router.navigate(['login'])
+    this.router.navigate(['login'], {queryParams: {logout:true}})
   }
 
 }
