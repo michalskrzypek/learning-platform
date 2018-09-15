@@ -18,6 +18,7 @@ import {AuthService} from "../shared/service/AuthService";
 import { SignupComponent } from './signup/signup.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {CategoryService} from "../shared/service/CategoryService";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {ToastrModule} from "ngx-toastr";
   ],
   providers: [
     AuthService,
+    CategoryService,
     CourseService,
     TokenStorage,
     {provide: HTTP_INTERCEPTORS,

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorage} from "../../shared/TokenStorage";
 import {Router} from "@angular/router";
+import {CategoryService} from "../../shared/service/CategoryService";
+import {Category} from "../../shared/model/Category";
 
 @Component({
   selector: 'app-navbar',
@@ -9,9 +11,14 @@ import {Router} from "@angular/router";
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private tokenStorage : TokenStorage, private router: Router) { }
+  categories: Category[];
+
+  constructor(private tokenStorage: TokenStorage, private router: Router, private categoryService: CategoryService) {
+  }
 
   ngOnInit() {
+    this.categoryService.findAll("count", true).subscribe(data =>
+      this.categories = data)
   }
 
   isAuthenticated() {
@@ -21,9 +28,9 @@ export class NavbarComponent implements OnInit {
     return false;
   }
 
-  logOut(){
+  logOut() {
     this.tokenStorage.removeToken();
-    this.router.navigate(['login'], {queryParams: {logout:true}})
+    this.router.navigate(['login'], {queryParams: {logout: true}})
   }
 
 }

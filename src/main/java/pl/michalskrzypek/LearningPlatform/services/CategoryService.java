@@ -23,19 +23,13 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> getAllCategories(String sortProperty) {
-/*        logger.warn("HERE0" + sortProperty);
-        Stream<String> categoryProperties = getCategoryFields().stream();
-        logger.warn(categoryProperties.findFirst().get());
-        boolean inProperties = categoryProperties.anyMatch(property -> property.equalsIgnoreCase(sortProperty));
-        logger.warn(inProperties);
-        if (inProperties) {*/
+    public List<Category> getAllCategories(String sortProperty, boolean descending) {
         List<Category> categories = new ArrayList<>();
-        categoryRepository.findAll(Sort.by(sortProperty).descending()).forEach(category -> categories.add(category));
-            /*logger.warn("HERE");
-    } else {
-        return getAllCategories();
-    }*/
+        if(descending) {
+            categoryRepository.findAll(Sort.by(sortProperty).descending()).forEach(category -> categories.add(category));
+        }else{
+            categoryRepository.findAll(Sort.by(sortProperty).ascending()).forEach(category -> categories.add(category));
+        }
         return categories;
     }
 
@@ -45,15 +39,4 @@ public class CategoryService {
         categoryRepository.findAll().forEach(category -> categories.add(category));
         return categories;
     }
-
-/*    private List<String> getCategoryFields(){
-        Field[] allFields = Category.class.getFields();
-        List<String> fieldsNames = new ArrayList<>();
-        for(Field f : allFields){
-            fieldsNames.add(f.getName());
-        }
-        logger.warn(fieldsNames);
-        return fieldsNames;
-    }*/
-
 }

@@ -1,7 +1,9 @@
 package pl.michalskrzypek.LearningPlatform.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.services.CategoryService;
@@ -12,6 +14,9 @@ import java.util.List;
 @RequestMapping("/categories")
 public class CategoryController {
 
+    @Value("${categories.sort.property}")
+    private String defaultSortProperty;
+
     private CategoryService categoryService;
 
     public CategoryController (CategoryService categoryService){
@@ -19,7 +24,7 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getAllCategories(){
-        return categoryService.getAllCategories("count");
+    public List<Category> getAllCategories(@RequestParam("sort") String sortProperty, @RequestParam("desc") boolean descending){
+        return categoryService.getAllCategories(sortProperty, descending);
     }
 }
