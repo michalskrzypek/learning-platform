@@ -11,7 +11,7 @@ public class UserDto {
 
     @Email(message = "Please provide valid email address.")
     private String email;
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\\\d)[A-Za-z\\\\d]{8,}$", message = "Password must contain at least 8 characters, including one number.")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$", message = "Password must contain at least 8 characters, including one number.")
     protected String password;
     @NotNull(message = "Please provide your first name.")
     private String firstName;
