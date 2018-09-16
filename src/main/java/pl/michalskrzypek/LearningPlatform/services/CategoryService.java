@@ -33,7 +33,6 @@ public class CategoryService {
         return categories;
     }
 
-
     public List<Category> findAllCategories() {
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().forEach(category -> categories.add(category));

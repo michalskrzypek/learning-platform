@@ -23,8 +23,13 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
-    public List<Category> getAllCategories(@RequestParam("sort") String sortProperty, @RequestParam("desc") boolean descending){
+    @GetMapping(params = {"sort", "desc"})
+    public List<Category> getAllCategoriesSorted(@RequestParam("sort") String sortProperty, @RequestParam("desc") boolean descending){
         return categoryService.findAllCategories(sortProperty, descending);
+    }
+
+    @GetMapping
+    public List<Category> getAllCategories(){
+        return categoryService.findAllCategories();
     }
 }
