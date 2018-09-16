@@ -19,6 +19,7 @@ import { SignupComponent } from './signup/signup.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import {CategoryService} from "../shared/service/CategoryService";
+import { CourseListComponent } from './course-list/course-list.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {CategoryService} from "../shared/service/CategoryService";
     CourseDetailsComponent,
     LoginComponent,
     SignupComponent,
+    CourseListComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ import {CategoryService} from "../shared/service/CategoryService";
       {path: '', pathMatch: 'full', redirectTo: 'home'},
       {path: "home", component: HomeComponent},
       {path: "course/:id", component: CourseDetailsComponent},
+      {path: "courses/:category", component: CourseListComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
     ]),

@@ -16,7 +16,7 @@
           <span class="glyphicon-glyphicon-th-list"></span> Categories
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a *ngFor="let category of categories" class="dropdown-item" href="#">{{category.name}}</a>
+          <a *ngFor="let category of categories" class="dropdown-item" [routerLink]="['/courses', category.name]">{{category.name}}</a>
         </div>
       </li>
     </ul>

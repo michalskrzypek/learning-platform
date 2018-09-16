@@ -10,6 +10,10 @@ export class CourseService {
   constructor(private http: HttpClient){
   }
 
+  findAll(category: string) : Observable<any>{
+    return this.http.get(this.apiRoot + '/' + category);
+  }
+
   findAll() : Observable<any>{
     return this.http.get(this.apiRoot + '/all');
   }

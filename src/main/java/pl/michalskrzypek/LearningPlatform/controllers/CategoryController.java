@@ -25,6 +25,6 @@ public class CategoryController {
 
     @GetMapping
     public List<Category> getAllCategories(@RequestParam("sort") String sortProperty, @RequestParam("desc") boolean descending){
-        return categoryService.getAllCategories(sortProperty, descending);
+        return categoryService.findAllCategories(sortProperty, descending);
     }
 }
