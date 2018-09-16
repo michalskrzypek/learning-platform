@@ -28,7 +28,6 @@ public class JWTTokenUtil implements Serializable {
     private int accessTokenValiditySeconds;
 
     public String generateToken(User user) {
-
         Claims claims = Jwts.claims();
         claims.setSubject(user.getEmail());
         claims.put("scope", user.getRole());

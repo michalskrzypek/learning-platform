@@ -11,17 +11,18 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
     private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-    @GetMapping(value="/user")
-    public List listUser(){
+    @GetMapping(value = "/user")
+    public List listUser() {
         return userService.findAll();
     }
 
     @GetMapping(value = "/user/{id}")
-    public User getOne(@PathVariable(value = "id") Long id){
+    public User getOne(@PathVariable(value = "id") Long id) {
         return userService.findById(id).get();
     }
-
 }

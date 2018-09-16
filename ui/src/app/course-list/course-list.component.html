@@ -1,0 +1,39 @@
+<html>
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+</head>
+<body>
+<br>
+<div class="container">
+  <div id="products" class="row view-group">
+    <div class="item col-xs-4 col-lg-4" *ngFor="let course of courses">
+      <div class="thumbnail card">
+        <div class="img-event">
+          <img class="group list-group-image img-fluid" src="http://placehold.it/400x250/000/fff" alt=""/>
+        </div>
+        <div class="caption card-body">
+          <h4 class="group card-title inner list-group-item-heading">
+            {{course.title}}</h4>
+          <p class="group inner list-group-item-text">
+           {{course.description}}</p>
+
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="lead" style="font-size: small">
+                Category: {{course.category.name}}</p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <a class="btn btn-success" style="font-size: 0.8em">Add to your courses!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

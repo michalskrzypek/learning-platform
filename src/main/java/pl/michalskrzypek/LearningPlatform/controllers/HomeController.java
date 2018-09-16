@@ -8,8 +8,6 @@ public class HomeController {
 
     @GetMapping("/home")
     public String home(){
-
         return "{\"message\": \"Hello it is a message from controller ;)\"}";
     }
-
 }

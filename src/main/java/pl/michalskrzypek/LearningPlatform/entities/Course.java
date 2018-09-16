@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -18,6 +20,8 @@ public class Course {
     @NotNull
     @Column(unique = true)
     private String title;
+
+    private String description = "No description available.";
 
     @NotNull
     @JoinColumn(name = "category_id")
@@ -47,4 +51,7 @@ public class Course {
     @JoinColumn(name = "course_id")
     @OneToMany(cascade = CascadeType.ALL)
     private List<Review> reviews;
+
+    @Min(value = 0)
+    private Integer purchases;
 }

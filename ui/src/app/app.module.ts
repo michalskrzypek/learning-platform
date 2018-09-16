@@ -18,6 +18,8 @@ import {AuthService} from "../shared/service/AuthService";
 import { SignupComponent } from './signup/signup.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {CategoryService} from "../shared/service/CategoryService";
+import { CourseListComponent } from './course-list/course-list.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import {ToastrModule} from "ngx-toastr";
     CourseDetailsComponent,
     LoginComponent,
     SignupComponent,
+    CourseListComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,8 @@ import {ToastrModule} from "ngx-toastr";
       {path: '', pathMatch: 'full', redirectTo: 'home'},
       {path: "home", component: HomeComponent},
       {path: "course/:id", component: CourseDetailsComponent},
+      {path: "courses/:category", component: CourseListComponent},
+      {path: "courses", component: CourseListComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
     ]),
@@ -48,6 +53,7 @@ import {ToastrModule} from "ngx-toastr";
   ],
   providers: [
     AuthService,
+    CategoryService,
     CourseService,
     TokenStorage,
     {provide: HTTP_INTERCEPTORS,

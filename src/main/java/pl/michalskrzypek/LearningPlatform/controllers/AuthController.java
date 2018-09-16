@@ -21,19 +21,18 @@ import javax.validation.Valid;
 @RequestMapping("/token")
 public class AuthController {
 
-    @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private JWTTokenUtil jwtTokenUtil;
-
-    @Autowired
     private UserService userService;
+    public AuthController(AuthenticationManager authenticationManager, JWTTokenUtil jwtTokenUtil, UserService userService){
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userService = userService;
+    }
 
     @PostMapping("/generate-token")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public AuthToken authenticateUser(@Valid @RequestBody LoginUserDto loginUser) throws AuthenticationException {
-
         String username = loginUser.getUsername();
         String password = loginUser.getPassword();
         final Authentication authentication = authenticationManager.authenticate(

@@ -18,27 +18,25 @@ import java.util.Optional;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private BCryptPasswordEncoder encoder;
+
+    private UserRepository userRepository;
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-
         User user = userRepository.findByEmail(s);
         if (user == null) {
             throw new UsernameNotFoundException("User " + user.getUsername() + " does not exist!");
         }
-
         return user;
     }
 
     public List<User> findAll() {
-
         List<User> allUsers = new ArrayList<>();
         userRepository.findAll().forEach(u -> allUsers.add(u));
-
         return allUsers;
     }
 
@@ -47,14 +45,12 @@ public class UserService implements UserDetailsService {
     }
 
     public User saveUser(UserDto newUser){
-
         User registeredUser = new User();
         registeredUser.setEmail(newUser.getEmail());
         registeredUser.setPassword(encoder.encode(newUser.getPassword()));
         registeredUser.setFirstName(newUser.getFirstName());
         registeredUser.setLastName(newUser.getLastName());
         registeredUser.setRole(newUser.getRole());
-
         return userRepository.save(registeredUser);
     }
 }

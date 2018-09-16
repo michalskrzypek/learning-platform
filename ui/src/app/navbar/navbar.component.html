@@ -10,6 +10,17 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
       </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          <span class="glyphicon-glyphicon-th-list"></span> Categories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a *ngFor="let category of categories" class="dropdown-item" [routerLink]="['/courses', category.name]">{{category.name}}</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/courses">All</a>
+        </div>
+      </li>
     </ul>
 
     <ul class="navbar-nav mr-2">
