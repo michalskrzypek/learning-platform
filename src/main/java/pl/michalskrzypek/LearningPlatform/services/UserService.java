@@ -17,11 +17,12 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    @Autowired
     private BCryptPasswordEncoder encoder;
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder encoder){
+
+    private UserRepository userRepository;
+    public UserService(UserRepository userRepository){
         this.userRepository = userRepository;
-        this.encoder = encoder;
     }
 
     @Override

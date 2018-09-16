@@ -30,13 +30,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private String headerString;
     @Value("${TOKEN_PREFIX}")
     private String tokenPrefix;
-
+    @Autowired
     private UserService userService;
+    @Autowired
     private JWTTokenUtil JWTTokenUtil;
-    public JWTAuthenticationFilter(UserService userService, JWTTokenUtil jwtTokenUtil) {
-        this.userService = userService;
-        this.JWTTokenUtil = jwtTokenUtil;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
