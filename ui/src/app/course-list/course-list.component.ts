@@ -19,11 +19,16 @@ export class CourseListComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.category = params['category'];
+      if (params['category'] != null) {
+        this.category = params['category'];
+        this.courseService.findAllByCategory(this.category).subscribe(data => {
+          this.courses = data;
+        });
+      } else {
+        this.courseService.findAll().subscribe(data => {
+          this.courses = data;
+        })
+      }
     });
-
-    this.courseService.findAllByCategory(this.category).subscribe(data => {
-      this.courses = data;
-    })
   }
 }

@@ -43,6 +43,7 @@ import { CourseListComponent } from './course-list/course-list.component';
       {path: "home", component: HomeComponent},
       {path: "course/:id", component: CourseDetailsComponent},
       {path: "courses/:category", component: CourseListComponent},
+      {path: "courses", component: CourseListComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
     ]),
