@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 public class Category {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,5 +23,4 @@ public class Category {
 
     @Min(value = 0)
     private int count = 0;
-
 }

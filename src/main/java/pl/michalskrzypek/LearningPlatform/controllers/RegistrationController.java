@@ -13,8 +13,10 @@ import javax.validation.Valid;
 @RequestMapping("/register")
 public class RegistrationController {
 
-    @Autowired
     private UserService userService;
+    public RegistrationController(UserService userService){
+        this.userService = userService;
+    }
 
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.CREATED)

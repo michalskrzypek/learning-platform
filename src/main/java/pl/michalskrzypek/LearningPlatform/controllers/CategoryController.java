@@ -18,7 +18,6 @@ public class CategoryController {
     private String defaultSortProperty;
 
     private CategoryService categoryService;
-
     public CategoryController (CategoryService categoryService){
         this.categoryService = categoryService;
     }

@@ -26,21 +26,20 @@ import java.util.Arrays;
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JWTTokenUtil JWTTokenUtil;
-
     @Value("${HEADER_STRING}")
     private String headerString;
-
     @Value("${TOKEN_PREFIX}")
     private String tokenPrefix;
 
+    private UserService userService;
+    private JWTTokenUtil JWTTokenUtil;
+    public JWTAuthenticationFilter(UserService userService, JWTTokenUtil jwtTokenUtil) {
+        this.userService = userService;
+        this.JWTTokenUtil = jwtTokenUtil;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-
         String header = req.getHeader(headerString);
         String username = null;
         String authToken = null;
@@ -57,20 +56,24 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         } else {
             logger.warn("There is no JWT put in the request header!");
         }
+        setAuthentication(username, authToken, req);
+        chain.doFilter(req, res);
+    }
+
+    private void setAuthentication(String username, String authToken, HttpServletRequest req) {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
             User user = (User) userService.loadUserByUsername(username);
-
             if (JWTTokenUtil.validateToken(authToken, user)) {
                 UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(user,null,
-                        Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
+                        new UsernamePasswordAuthenticationToken(
+                                user,
+                                null,
+                                Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
+
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 logger.info("Authenticated user " + username + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-
-        chain.doFilter(req, res);
     }
 }

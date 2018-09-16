@@ -15,10 +15,9 @@ import java.util.Optional;
 @Service
 public class CategoryService {
 
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     private CategoryRepository categoryRepository;
-
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }

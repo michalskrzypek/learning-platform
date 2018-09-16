@@ -9,6 +9,7 @@ public class LoginUserDto {
 
     @NotNull(message = "Please provide the username!")
     private String username;
+
     @NotNull(message = "Please provide the password!")
     private String password;
 }

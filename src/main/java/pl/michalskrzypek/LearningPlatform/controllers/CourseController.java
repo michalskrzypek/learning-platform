@@ -12,8 +12,10 @@ import java.util.List;
 @RequestMapping("/courses")
 public class CourseController {
 
-    @Autowired
     CourseService courseService;
+    public CourseController(CourseService courseService){
+        this.courseService = courseService;
+    }
 
     @GetMapping("/{category}")
     public List<Course> getCoursesByCategory(@PathVariable String category) {

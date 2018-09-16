@@ -13,7 +13,6 @@ public class CourseService {
 
     private CourseRepository courseRepository;
     private CategoryService categoryService;
-
     public CourseService(CourseRepository courseRepository, CategoryService categoryService) {
         this.courseRepository = courseRepository;
         this.categoryService = categoryService;

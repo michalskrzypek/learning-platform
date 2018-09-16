@@ -21,12 +21,10 @@ public class CustomizedExceptionHandlerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ErrorDetails invalidFormArgsException(MethodArgumentNotValidException exception) {
-
         String errorMsg = exception.getBindingResult().getFieldErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .findFirst()
                 .orElse(exception.getMessage());
-
         return ErrorDetails.builder().message(errorMsg).timestamp(new Date()).build();
     }
 
