@@ -26,6 +26,7 @@
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
     "lodash": "latest",
+    "ngx-chips": "^1.9.7",
     "ngx-toastr": "^9.0.2",
     "popper": "^1.0.1",
     "popper.js": "^1.14.3",

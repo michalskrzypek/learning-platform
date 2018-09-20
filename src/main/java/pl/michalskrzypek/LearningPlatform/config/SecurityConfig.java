@@ -21,15 +21,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private JWTAuthenticationEntryPoint unauthorizedHandler;
-
     @Autowired
     public JWTAuthenticationFilter authenticationTokenFilterBean;
 
     private static final String LOGIN_URL = "/login";
-
     private static final String[] PERMIT_URLS = {
             LOGIN_URL,
             "/*.css",

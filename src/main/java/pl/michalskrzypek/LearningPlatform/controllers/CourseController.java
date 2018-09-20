@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/courses")
 public class CourseController {
 
-    CourseService courseService;
+    private CourseService courseService;
     public CourseController(CourseService courseService){
         this.courseService = courseService;
     }

@@ -20,10 +20,14 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import {CategoryService} from "../shared/service/CategoryService";
 import { CourseListComponent } from './course-list/course-list.component';
+import { CourseFormComponent } from './course-form/course-form.component';
+import {AutoSizeDirective} from "../shared/directive/AutoSizeDirective";
+import {TagInputModule} from "ngx-chips";
 
 @NgModule({
   declarations: [
     AppComponent,
+    AutoSizeDirective,
     NavbarComponent,
     HomeComponent,
     CourseItemComponent,
@@ -31,6 +35,7 @@ import { CourseListComponent } from './course-list/course-list.component';
     LoginComponent,
     SignupComponent,
     CourseListComponent,
+    CourseFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,12 +46,14 @@ import { CourseListComponent } from './course-list/course-list.component';
     RouterModule.forRoot([
       {path: '', pathMatch: 'full', redirectTo: 'home'},
       {path: "home", component: HomeComponent},
+      {path: "course/new", component: CourseFormComponent},
       {path: "course/:id", component: CourseDetailsComponent},
       {path: "courses/:category", component: CourseListComponent},
       {path: "courses", component: CourseListComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
     ]),
+    TagInputModule,
     ToastrModule.forRoot({
       timeOut: 3000
     })

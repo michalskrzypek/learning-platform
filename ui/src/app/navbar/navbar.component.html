@@ -21,7 +21,11 @@
           <a class="dropdown-item" routerLink="/courses">All</a>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/course/new" routerLinkActive="active">Add new course!</a>
+      </li>
     </ul>
+
 
     <ul class="navbar-nav mr-2">
       <li class="nav-item" *ngIf="!isAuthenticated()">
