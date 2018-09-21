@@ -17,30 +17,29 @@
         <p>Please provide all the important information about the course you are adding to our site. Later, upload the
           course content files.</p>
       </div>
-      <!-- <form id="Login" (submit)="show()">-->
-
-      <div class="form-group">
+      <form (submit)="save()">
+        <div class="form-group">
           <label for="title" class="col-form-label course-form-label">Title:</label>
           <input type="text" class="form-control" id="title" placeholder="Title..."
                  [(ngModel)]="theCourse.title" name="title">
 
-        <label for="desc" class="col-form-label course-form-label">Description:</label>
-        <textarea class="form-control" id="desc" placeholder="Desc..."
-                  [(ngModel)]="theCourse.description" name="desc" autosize></textarea>
+          <label for="desc" class="col-form-label course-form-label">Description:</label>
+          <textarea class="form-control" id="desc" placeholder="Desc..."
+                    [(ngModel)]="theCourse.description" name="desc" autosize></textarea>
 
-        <label for="category" class="col-form-label course-form-label">Category:</label>
-        <select class="form-control" id="category" name="category" [(ngModel)]="theCourse.category"
-                changeControl>
-          <option *ngFor="let category of categories">
-            {{category.name}}
-          </option>
-        </select>
+          <label for="category" class="col-form-label course-form-label">Category:</label>
+          <select class="form-control" id="category" name="category" [(ngModel)]="theCourse.category"
+                  changeControl>
+            <option *ngFor="let category of categories">
+              {{category.name}}
+            </option>
+          </select>
 
-        <label for="category" class="col-form-label course-form-label">Tags:</label>
-        <tag-input name="tags" id="tags" [modelAsStrings]="true" [(ngModel)]="theCourse.tags"></tag-input>
-      </div>
-      <button type="submit" class="btn btn-success btn-primary">Submit</button>
-      <!--</form>-->
+          <label for="category" class="col-form-label course-form-label">Tags:</label>
+          <tag-input name="tags" id="tags" [modelAsStrings]="true" [(ngModel)]="theCourse.tags"></tag-input>
+        </div>
+        <button type="submit" class="btn btn-success btn-primary">Submit</button>
+      </form>
     </div>
   </div>
 </div>
