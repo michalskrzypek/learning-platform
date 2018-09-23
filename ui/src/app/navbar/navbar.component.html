@@ -18,7 +18,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a *ngFor="let category of categories" class="dropdown-item" [routerLink]="['/courses', category.name]">{{category.name}}</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/courses">All</a>
+          <a class="dropdown-item" routerLink="/courses/all">All</a>
         </div>
       </li>
       <li class="nav-item">

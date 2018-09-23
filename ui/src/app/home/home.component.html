@@ -4,16 +4,10 @@
 </head>
 
 <body>
-<p>
-  home works!
-</p>
-
-
-<input [(ngModel)]="email" type="text" id="email" name="email"/>
-
-<p> {{email}}</p>
-
 <div [hidden]="!isAuthenticated()">
+  <p>  TOKEN: {{token}}</p>
+  <p>  USER: {{user.email}}</p>
+
   <div *ngFor="let course of courses">
     {{course.title}}
   </div>
