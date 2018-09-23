@@ -2,6 +2,7 @@ package pl.michalskrzypek.LearningPlatform.services;
 
 import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.entities.Tag;
+import pl.michalskrzypek.LearningPlatform.exceptions.TagNotFoundException;
 import pl.michalskrzypek.LearningPlatform.repositories.TagRepository;
 
 import java.util.ArrayList;
@@ -17,27 +18,28 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public List<Tag> getAllByNames(List<String> tagsNames){
-        saveNewTags(tagsNames);
+    public List<Tag> getAllByNames(List<String> tagsNames) {
         List<Tag> tags = new ArrayList<>(tagsNames.size());
         tagsNames.stream()
-                .map(tagName -> tagName.toLowerCase())
                 .forEach(tagName -> {
-                    Tag tag = tagRepository.findByName(tagName).get();
+                    Tag tag = getByName(tagName);
                     tags.add(tag);
                 });
         return tags;
     }
 
+    public Tag getByName(String tagName) {
+        String tagNameLowerCase = Optional.ofNullable(tagName)
+                .map(t -> t.toLowerCase())
+                .filter(t -> tagRepository.findByName(t).isPresent())
+                .orElseThrow(() -> new TagNotFoundException(tagName));
+
+        return tagRepository.findByName(tagNameLowerCase).get();
+    }
+
     public void saveNewTags(List<String> tagsNames) {
         tagsNames.stream()
-                .map(tagName -> tagName.toLowerCase())
-                .filter(tagName -> !tagRepository.findByName(tagName).isPresent())
-                .forEach(tagName -> {
-                    Tag tag = new Tag();
-                    tag.setName(tagName);
-                    tagRepository.save(tag);
-                });
+                .forEach(tagName -> saveNewTag(tagName));
     }
 
     public void saveNewTag(String tagName) {
@@ -51,18 +53,14 @@ public class TagService {
                 });
     }
 
-    public Tag getByName(String tagName){
-        return tagRepository.findByName(tagName).get();
-    }
-
-    public void addCount(List<Tag> tags){
+    public void addCount(List<Tag> tags) {
         tags.stream()
                 .forEach(t -> {
                     addCount(t);
                 });
     }
 
-    private void addCount(Tag tag){
+    public void addCount(Tag tag) {
         int newCount = tag.getCount() + 1;
         tag.setCount(newCount);
         tagRepository.save(tag);

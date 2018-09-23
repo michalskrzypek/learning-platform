@@ -1,8 +1,6 @@
 package pl.michalskrzypek.LearningPlatform.dtos;
 
 import lombok.Data;
-import pl.michalskrzypek.LearningPlatform.entities.Category;
-import pl.michalskrzypek.LearningPlatform.entities.Tag;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -10,10 +8,10 @@ import java.util.List;
 @Data
 public class CourseDto {
 
-    @NotNull
+    @NotNull(message = "Please provide title.")
     private String title;
     private String description = "No description available.";
-    @NotNull
+    @NotNull(message = "Please provide category.")
     private String category;
     private List<String> tags;
 }

@@ -3,6 +3,7 @@ package pl.michalskrzypek.LearningPlatform.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pl.michalskrzypek.LearningPlatform.annotations.IsInstructor;
 import pl.michalskrzypek.LearningPlatform.common.Roles;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
@@ -36,7 +37,7 @@ public class CourseController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('" + Roles.ROLE_INSTRUCTOR + ", "+ Roles.ROLE_ADMIN + "')")
+    @IsInstructor
     @ResponseStatus(HttpStatus.CREATED)
     public Course addNewCourse(@Valid @RequestBody CourseDto courseDto){
         return courseService.save(courseDto);

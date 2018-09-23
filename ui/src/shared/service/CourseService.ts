@@ -20,7 +20,7 @@ export class CourseService {
   }
 
   findAll() : Observable<any>{
-    return this.http.get(this.apiRoot + '/all');
+    return this.http.get(this.apiRoot);
   }
 
 }

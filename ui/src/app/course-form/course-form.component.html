@@ -28,9 +28,8 @@
                     [(ngModel)]="theCourse.description" name="desc" autosize></textarea>
 
           <label for="category" class="col-form-label course-form-label">Category:</label>
-          <select class="form-control" id="category" name="category" [(ngModel)]="theCourse.category"
-                  changeControl>
-            <option *ngFor="let category of categories">
+          <select class="form-control" id="category" name="category" [(ngModel)]="theCourse.category">
+            <option *ngFor="let category of categories" [value]="category.name">
               {{category.name}}
             </option>
           </select>

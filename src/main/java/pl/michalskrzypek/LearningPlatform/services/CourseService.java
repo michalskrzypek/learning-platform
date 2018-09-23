@@ -1,12 +1,10 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.dtos.converters.CourseDtoConverter;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
-import pl.michalskrzypek.LearningPlatform.entities.Tag;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 
@@ -32,6 +30,8 @@ public class CourseService {
     }
 
     public Course save(CourseDto courseDto) {
+        tagService.saveNewTags(courseDto.getTags());
+
         Course course = courseDtoConverter.convert(courseDto);
 
         User instructor = userService.getCurrentUser();

@@ -48,8 +48,8 @@ import {TagInputModule} from "ngx-chips";
       {path: "home", component: HomeComponent},
       {path: "course/new", component: CourseFormComponent},
       {path: "course/:id", component: CourseDetailsComponent},
+      {path: "courses/all", component: CourseListComponent},
       {path: "courses/:category", component: CourseListComponent},
-      {path: "courses", component: CourseListComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
     ]),
