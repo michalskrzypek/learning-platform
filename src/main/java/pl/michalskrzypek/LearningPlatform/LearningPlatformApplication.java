@@ -23,7 +23,8 @@ public class LearningPlatformApplication {
 		PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
 		YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
 		ImmutableList<ClassPathResource> resources = ImmutableList.of(
-				new ClassPathResource("categories.yml"));
+				new ClassPathResource("categories.yml"),
+				new ClassPathResource("mails.yml"));
 		yaml.setResources(Iterables.toArray(resources, ClassPathResource.class));
 		propertySourcesPlaceholderConfigurer.setProperties(yaml.getObject());
 		return propertySourcesPlaceholderConfigurer;

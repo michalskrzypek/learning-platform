@@ -54,4 +54,15 @@ public class Course {
 
     @Min(value = 0)
     private Integer purchases = 0;
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", category=" + category +
+                ", tags=" + tags +
+                '}';
+    }
 }
