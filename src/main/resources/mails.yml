@@ -1,0 +1,4 @@
+mails:
+  newCourseCreated:
+    title: New course added!
+    templateName: new-course
