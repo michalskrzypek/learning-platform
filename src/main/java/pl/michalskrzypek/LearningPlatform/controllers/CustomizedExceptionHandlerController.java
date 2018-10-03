@@ -15,11 +15,11 @@ import pl.michalskrzypek.LearningPlatform.exceptions.CategoryNotFoundException;
 import java.util.Date;
 
 @ControllerAdvice
+@ResponseBody
 public class CustomizedExceptionHandlerController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
     public ErrorDetails invalidFormArgsException(MethodArgumentNotValidException exception) {
         String errorMsg = exception.getBindingResult().getFieldErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -30,14 +30,12 @@ public class CustomizedExceptionHandlerController {
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
     public ErrorDetails invalidCredentialsException() {
         return ErrorDetails.builder().message("Wrong user credentials!").timestamp(new Date()).build();
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
     public ErrorDetails invalidUsernameException(UsernameNotFoundException exception) {
         String message = exception.getMessage();
         return ErrorDetails.builder().message(message).timestamp(new Date()).build();
@@ -45,7 +43,6 @@ public class CustomizedExceptionHandlerController {
 
     @ExceptionHandler(CategoryNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
     public ErrorDetails invalidCategoryName(CategoryNotFoundException exception){
         String message = exception.getMessage();
         return ErrorDetails.builder().message(message).build();

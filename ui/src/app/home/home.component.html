@@ -5,8 +5,10 @@
 
 <body>
 <div [hidden]="!isAuthenticated()">
-  <p>  TOKEN: {{token}}</p>
-  <p>  USER: {{user.email}}</p>
+  <div class="lol">
+    <p> TOKEN: {{token}}</p>
+  </div>
+  <p> USER: {{user.email}}</p>
 
   <div *ngFor="let course of courses">
     {{course.title}}

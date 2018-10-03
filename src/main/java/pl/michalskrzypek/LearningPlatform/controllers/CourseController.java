@@ -8,6 +8,7 @@ import pl.michalskrzypek.LearningPlatform.common.Roles;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.services.CourseService;
+import pl.michalskrzypek.LearningPlatform.services.TagService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -17,8 +18,11 @@ import java.util.List;
 public class CourseController {
 
     private CourseService courseService;
-    public CourseController(CourseService courseService){
+    private TagService tagService;
+
+    public CourseController(CourseService courseService, TagService tagService) {
         this.courseService = courseService;
+        this.tagService = tagService;
     }
 
     @GetMapping("/{category}")
@@ -39,7 +43,10 @@ public class CourseController {
     @PostMapping
     @IsInstructor
     @ResponseStatus(HttpStatus.CREATED)
-    public Course addNewCourse(@Valid @RequestBody CourseDto courseDto){
-        return courseService.save(courseDto);
+    public Course addNewCourse(@Valid @RequestBody CourseDto courseDto) {
+        tagService.saveNewTags(courseDto.getTags());
+        Course newCourse = courseService.save(courseDto);
+        courseService.increaseCorrespondingCounts(newCourse);
+        return newCourse;
     }
 }

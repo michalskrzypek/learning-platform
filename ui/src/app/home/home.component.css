@@ -1,0 +1,7 @@
+.lol {
+  max-width: 100%;
+}
+
+.lol p{
+  word-break: break-word;
+}

@@ -5,6 +5,7 @@ import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.dtos.converters.CourseDtoConverter;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
+import pl.michalskrzypek.LearningPlatform.entities.Tag;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 
@@ -30,17 +31,16 @@ public class CourseService {
     }
 
     public Course save(CourseDto courseDto) {
-        tagService.saveNewTags(courseDto.getTags());
-
         Course course = courseDtoConverter.convert(courseDto);
-
         User instructor = userService.getCurrentUser();
         course.setInstructor(instructor);
         courseRepository.save(course);
+        return course;
+    }
 
+    public void increaseCorrespondingCounts(Course course){
         categoryService.addCount(course.getCategory());
         tagService.addCount(course.getTags());
-        return course;
     }
 
     public List<Course> findAll() {

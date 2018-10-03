@@ -27,11 +27,13 @@ public class CourseDtoConverter {
 
     public Course convert(CourseDto from){
         Course course = new Course();
-        Category category = categoryService.findByName(from.getCategory());
-        List<Tag> tags = tagService.getAllByNames(from.getTags());
         course.setTitle(from.getTitle());
         course.setDescription(from.getDescription());
+
+        Category category = categoryService.findByName(from.getCategory());
         course.setCategory(category);
+
+        List<Tag> tags = tagService.getAllByNames(from.getTags());
         course.setTags(tags);
         return course;
     }
