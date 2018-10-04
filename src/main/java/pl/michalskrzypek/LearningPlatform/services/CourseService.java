@@ -1,13 +1,18 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
 import org.springframework.stereotype.Service;
+import pl.michalskrzypek.LearningPlatform.common.Mail;
+import pl.michalskrzypek.LearningPlatform.enums.MailType;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.dtos.converters.CourseDtoConverter;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
-import pl.michalskrzypek.LearningPlatform.entities.Tag;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
+import pl.michalskrzypek.LearningPlatform.services.mails.MailTemplate;
+import pl.michalskrzypek.LearningPlatform.services.mails.MailTemplateConverter;
+import pl.michalskrzypek.LearningPlatform.services.mails.MailTemplateFactory;
+import pl.michalskrzypek.LearningPlatform.services.mails.MailService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +25,21 @@ public class CourseService {
     private TagService tagService;
     private CourseDtoConverter courseDtoConverter;
     private UserService userService;
+    private MailService mailService;
+    private MailTemplateFactory mailTemplateFactory;
+    private MailTemplateConverter mailTemplateConverter;
 
     public CourseService(CourseRepository courseRepository, CategoryService categoryService, TagService tagService,
-                         UserService userService, CourseDtoConverter courseDtoConverter) {
+                         UserService userService, CourseDtoConverter courseDtoConverter, MailService mailService,
+                         MailTemplateFactory mailTemplateFactory, MailTemplateConverter mailTemplateConverter) {
         this.courseRepository = courseRepository;
         this.categoryService = categoryService;
         this.tagService = tagService;
         this.courseDtoConverter = courseDtoConverter;
         this.userService = userService;
+        this.mailService = mailService;
+        this.mailTemplateFactory = mailTemplateFactory;
+        this.mailTemplateConverter = mailTemplateConverter;
     }
 
     public Course save(CourseDto courseDto) {
@@ -35,12 +47,20 @@ public class CourseService {
         User instructor = userService.getCurrentUser();
         course.setInstructor(instructor);
         courseRepository.save(course);
+        notifyUser(instructor, MailType.NEW_COURSE);
         return course;
     }
 
-    public void increaseCorrespondingCounts(Course course){
+    public void increaseCorrespondingCounts(Course course) {
         categoryService.addCount(course.getCategory());
         tagService.addCount(course.getTags());
+    }
+
+    private void notifyUser(User user, MailType mailType) {
+        MailTemplate mailTemplate = mailTemplateFactory.createMailTemplate(mailType);
+        Mail mail = MailTemplateConverter.createMail(user.getEmail(), mailTemplate);
+
+        mailService.sendMail(mail);
     }
 
     public List<Course> findAll() {

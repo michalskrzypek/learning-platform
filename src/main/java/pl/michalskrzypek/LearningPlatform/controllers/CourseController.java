@@ -6,7 +6,7 @@ import pl.michalskrzypek.LearningPlatform.annotations.IsInstructor;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.services.CourseService;
-import pl.michalskrzypek.LearningPlatform.services.mails.EmailService;
+import pl.michalskrzypek.LearningPlatform.services.mails.MailService;
 import pl.michalskrzypek.LearningPlatform.services.TagService;
 
 import javax.validation.Valid;
@@ -18,12 +18,12 @@ public class CourseController {
 
     private CourseService courseService;
     private TagService tagService;
-    private EmailService emailService;
+    private MailService mailService;
 
-    public CourseController(CourseService courseService, TagService tagService, EmailService emailService) {
+    public CourseController(CourseService courseService, TagService tagService, MailService mailService) {
         this.courseService = courseService;
         this.tagService = tagService;
-        this.emailService = emailService;
+        this.mailService = mailService;
     }
 
     @GetMapping("/{category}")

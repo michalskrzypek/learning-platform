@@ -9,8 +9,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("mails")
 public class MailConfig {
 
-    private MailConfigEntry newCourseCreated;
+    private MailConfigEntry courseCreated;
 
+    @Data
     public static class MailConfigEntry {
         private String title;
         private String templateName;
