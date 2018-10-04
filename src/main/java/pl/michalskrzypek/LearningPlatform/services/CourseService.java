@@ -10,10 +10,7 @@ import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
-import pl.michalskrzypek.LearningPlatform.services.mails.MailTemplate;
-import pl.michalskrzypek.LearningPlatform.services.mails.MailTemplateConverter;
-import pl.michalskrzypek.LearningPlatform.services.mails.MailTemplateFactory;
-import pl.michalskrzypek.LearningPlatform.services.mails.MailService;
+import pl.michalskrzypek.LearningPlatform.services.mails.*;
 
 import java.util.ArrayList;
 import java.util.List;

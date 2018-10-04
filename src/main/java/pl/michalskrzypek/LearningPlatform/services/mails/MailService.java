@@ -13,7 +13,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
-public class MailService implements IMailService {
+public class MailService {
 
     private JavaMailSender mailSender;
     private MailTemplateFactory mailTemplateFactory;
@@ -28,11 +28,10 @@ public class MailService implements IMailService {
     @Async
     public void notifyUser(User user, MailType mailType) {
         MailTemplate mailTemplate = mailTemplateFactory.createMailTemplate(mailType);
-        Mail mail = MailTemplateConverter.createMail(user.getEmail(), mailTemplate);
+        Mail mail = mailTemplateConverter.createMail(user.getEmail(), mailTemplate);
         sendMail(mail);
     }
 
-    @Override
     public void sendMail(Mail mail) {
         try {
             tryToSendMessage(mail);

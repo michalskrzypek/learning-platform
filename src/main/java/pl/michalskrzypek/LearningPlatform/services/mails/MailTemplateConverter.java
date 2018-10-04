@@ -17,14 +17,14 @@ public class MailTemplateConverter {
         this.templateEngine = templateEngine;
     }
 
-    public static Mail createMail(String recipient, MailTemplate mailTemplate) {
+    public Mail createMail(String recipient, MailTemplate mailTemplate) {
         String mailBody = processTemplateBody(mailTemplate.getTemplateName());
         String subject = mailTemplate.getSubject();
 
         return Mail.of(recipient, subject, mailBody);
     }
 
-    private static String processTemplateBody(String templateName) {
+    private String processTemplateBody(String templateName) {
         String body = templateEngine.process(templateName, new Context());
         return body;
     }
