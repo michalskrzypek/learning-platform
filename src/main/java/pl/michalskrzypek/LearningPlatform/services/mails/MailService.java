@@ -2,9 +2,12 @@ package pl.michalskrzypek.LearningPlatform.services.mails;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import pl.michalskrzypek.LearningPlatform.common.Mail;
+import pl.michalskrzypek.LearningPlatform.entities.User;
+import pl.michalskrzypek.LearningPlatform.enums.MailType;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -12,10 +15,21 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class MailService implements IMailService {
 
-    JavaMailSender mailSender;
+    private JavaMailSender mailSender;
+    private MailTemplateFactory mailTemplateFactory;
+    private MailTemplateConverter mailTemplateConverter;
 
-    public MailService(JavaMailSender javaMailSender, TemplateEngine templateEngine){
+    public MailService(JavaMailSender javaMailSender, MailTemplateFactory mailTemplateFactory, MailTemplateConverter mailTemplateConverter){
         this.mailSender = javaMailSender;
+        this.mailTemplateFactory = mailTemplateFactory;
+        this.mailTemplateConverter = mailTemplateConverter;
+    }
+
+    @Async
+    public void notifyUser(User user, MailType mailType) {
+        MailTemplate mailTemplate = mailTemplateFactory.createMailTemplate(mailType);
+        Mail mail = MailTemplateConverter.createMail(user.getEmail(), mailTemplate);
+        sendMail(mail);
     }
 
     @Override

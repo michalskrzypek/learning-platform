@@ -10,11 +10,6 @@ public class NewCourseMailTemplate extends MailTemplate {
 
     public NewCourseMailTemplate(MailConfig mailConfig) {
         this.mailConfig = mailConfig;
-/*
-        Context context = new Context();
-        context.setVariable("courseTitle", course.getTitle());
-        context.setVariable("category", course.getCategory());
-        this.setContext(context);*/
     }
 
     @Override

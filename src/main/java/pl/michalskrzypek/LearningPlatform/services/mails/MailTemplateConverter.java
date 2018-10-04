@@ -6,7 +6,7 @@ import org.thymeleaf.context.Context;
 import pl.michalskrzypek.LearningPlatform.common.Mail;
 
 /**
- * Class responsible for processing MailTemplates to final Mails
+ * Class responsible for processing MailTemplates to final reade-to-sent Mails
  */
 @Component
 public class MailTemplateConverter {

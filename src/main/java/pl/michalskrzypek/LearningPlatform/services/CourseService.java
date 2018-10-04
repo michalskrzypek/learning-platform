@@ -1,5 +1,6 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.common.Mail;
 import pl.michalskrzypek.LearningPlatform.enums.MailType;
@@ -26,41 +27,27 @@ public class CourseService {
     private CourseDtoConverter courseDtoConverter;
     private UserService userService;
     private MailService mailService;
-    private MailTemplateFactory mailTemplateFactory;
-    private MailTemplateConverter mailTemplateConverter;
+
 
     public CourseService(CourseRepository courseRepository, CategoryService categoryService, TagService tagService,
-                         UserService userService, CourseDtoConverter courseDtoConverter, MailService mailService,
-                         MailTemplateFactory mailTemplateFactory, MailTemplateConverter mailTemplateConverter) {
+                         UserService userService, CourseDtoConverter courseDtoConverter, MailService mailService) {
         this.courseRepository = courseRepository;
         this.categoryService = categoryService;
         this.tagService = tagService;
         this.courseDtoConverter = courseDtoConverter;
         this.userService = userService;
         this.mailService = mailService;
-        this.mailTemplateFactory = mailTemplateFactory;
-        this.mailTemplateConverter = mailTemplateConverter;
     }
 
     public Course save(CourseDto courseDto) {
         Course course = courseDtoConverter.convert(courseDto);
+
         User instructor = userService.getCurrentUser();
         course.setInstructor(instructor);
         courseRepository.save(course);
-        notifyUser(instructor, MailType.NEW_COURSE);
+
+        mailService.notifyUser(instructor, MailType.NEW_COURSE);
         return course;
-    }
-
-    public void increaseCorrespondingCounts(Course course) {
-        categoryService.addCount(course.getCategory());
-        tagService.addCount(course.getTags());
-    }
-
-    private void notifyUser(User user, MailType mailType) {
-        MailTemplate mailTemplate = mailTemplateFactory.createMailTemplate(mailType);
-        Mail mail = MailTemplateConverter.createMail(user.getEmail(), mailTemplate);
-
-        mailService.sendMail(mail);
     }
 
     public List<Course> findAll() {
@@ -78,5 +65,10 @@ public class CourseService {
 
     public Course findById(Long id) {
         return courseRepository.findById(id).get();
+    }
+
+    public void increaseCorrespondingCounts(Course course) {
+        categoryService.addCount(course.getCategory());
+        tagService.addCount(course.getTags());
     }
 }
