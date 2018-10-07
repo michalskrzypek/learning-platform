@@ -1,16 +1,14 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import pl.michalskrzypek.LearningPlatform.common.Mail;
-import pl.michalskrzypek.LearningPlatform.enums.MailType;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.dtos.converters.CourseDtoConverter;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.entities.User;
+import pl.michalskrzypek.LearningPlatform.enums.MailType;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
-import pl.michalskrzypek.LearningPlatform.services.mails.*;
+import pl.michalskrzypek.LearningPlatform.services.mails.MailService;
 
 import java.util.ArrayList;
 import java.util.List;
