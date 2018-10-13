@@ -30,7 +30,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PERMIT_URLS = {
             LOGIN_URL,
             "/*.css",
-            "/resources/**"
+            "/resources/**",
+            "/token/*",
+            "/register/user",
+            "/signup",
+            "/home"
     };
 
     @Override
@@ -54,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/token/*", "/register/user", "/categories/**", "/courses/**", "/users/**").permitAll()
+                .antMatchers(PERMIT_URLS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

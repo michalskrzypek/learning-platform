@@ -11,6 +11,7 @@ import pl.michalskrzypek.LearningPlatform.services.TagService;
 import pl.michalskrzypek.LearningPlatform.services.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CourseDtoConverter {
@@ -33,8 +34,11 @@ public class CourseDtoConverter {
         Category category = categoryService.findByName(from.getCategory());
         course.setCategory(category);
 
-        List<Tag> tags = tagService.getAllByNames(from.getTags());
-        course.setTags(tags);
+        Optional.ofNullable(from.getTags()).ifPresent(tags -> {
+            List<Tag> courseTags = tagService.getAllByNames(tags);
+            course.setTags(courseTags);
+        });
+
         return course;
     }
 }

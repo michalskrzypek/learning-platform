@@ -46,8 +46,8 @@ public class User implements UserDetails, Serializable {
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "course_student",
-            joinColumns = @JoinColumn(name = "student_id"),
+    @JoinTable(name = "course_user",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> assigned_courses;
 

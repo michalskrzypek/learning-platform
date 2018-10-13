@@ -11,6 +11,7 @@ import pl.michalskrzypek.LearningPlatform.services.TagService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/courses")
@@ -18,12 +19,10 @@ public class CourseController {
 
     private CourseService courseService;
     private TagService tagService;
-    private MailService mailService;
 
-    public CourseController(CourseService courseService, TagService tagService, MailService mailService) {
+    public CourseController(CourseService courseService, TagService tagService) {
         this.courseService = courseService;
         this.tagService = tagService;
-        this.mailService = mailService;
     }
 
     @GetMapping("/{category}")
@@ -45,7 +44,9 @@ public class CourseController {
     @IsInstructor
     @ResponseStatus(HttpStatus.CREATED)
     public Course addNewCourse(@Valid @RequestBody CourseDto courseDto) {
-        tagService.saveNewTags(courseDto.getTags());
+        Optional.ofNullable(courseDto.getTags())
+                .ifPresent(tags -> tagService.saveNewTags(courseDto.getTags()));
+
         Course newCourse = courseService.save(courseDto);
         courseService.increaseCorrespondingCounts(newCourse);
         return newCourse;

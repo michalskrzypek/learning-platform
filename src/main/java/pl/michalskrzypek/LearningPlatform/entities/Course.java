@@ -43,10 +43,10 @@ public class Course {
     private User instructor;
 
     @ManyToMany
-    @JoinTable(name = "course_student",
+    @JoinTable(name = "course_user",
             joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private List<User> assigned_students;
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> assigned_users;
 
     @JoinColumn(name = "course_id")
     @OneToMany(cascade = CascadeType.ALL)

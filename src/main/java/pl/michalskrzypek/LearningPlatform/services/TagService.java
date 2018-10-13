@@ -54,10 +54,9 @@ public class TagService {
     }
 
     public void addCount(List<Tag> tags) {
-        tags.stream()
-                .forEach(t -> {
-                    addCount(t);
-                });
+        Optional.ofNullable(tags)
+            .ifPresent(tagsList -> tagsList.stream()
+                                    .forEach(t -> addCount(t)));
     }
 
     public void addCount(Tag tag) {
