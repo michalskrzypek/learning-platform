@@ -23,6 +23,7 @@ import { CourseListComponent } from './course-list/course-list.component';
 import { CourseFormComponent } from './course-form/course-form.component';
 import {AutoSizeDirective} from "../shared/directive/AutoSizeDirective";
 import {TagInputModule} from "ngx-chips";
+import { MyCoursesComponent } from './my-courses/my-courses.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {TagInputModule} from "ngx-chips";
     SignupComponent,
     CourseListComponent,
     CourseFormComponent,
+    MyCoursesComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +52,7 @@ import {TagInputModule} from "ngx-chips";
       {path: "course/:id", component: CourseDetailsComponent},
       {path: "courses/all", component: CourseListComponent},
       {path: "courses/:category", component: CourseListComponent},
+      {path: "user/courses", component: MyCoursesComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
     ]),
