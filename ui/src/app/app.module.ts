@@ -24,6 +24,7 @@ import { CourseFormComponent } from './course-form/course-form.component';
 import {AutoSizeDirective} from "../shared/directive/AutoSizeDirective";
 import {TagInputModule} from "ngx-chips";
 import { MyCoursesComponent } from './my-courses/my-courses.component';
+import {UserService} from "../shared/service/UserService";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { MyCoursesComponent } from './my-courses/my-courses.component';
       {path: "course/:id", component: CourseDetailsComponent},
       {path: "courses/all", component: CourseListComponent},
       {path: "courses/:category", component: CourseListComponent},
-      {path: "user/courses", component: MyCoursesComponent},
+      {path: "my-courses", component: MyCoursesComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
     ]),
@@ -66,6 +67,7 @@ import { MyCoursesComponent } from './my-courses/my-courses.component';
     CategoryService,
     CourseService,
     TokenStorage,
+    UserService,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi: true}

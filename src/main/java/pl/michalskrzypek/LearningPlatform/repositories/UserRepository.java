@@ -2,6 +2,7 @@ package pl.michalskrzypek.LearningPlatform.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 
 import java.util.List;

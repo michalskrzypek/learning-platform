@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.dtos.UserDto;
+import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.repositories.UserRepository;
 
@@ -59,5 +60,9 @@ public class UserService implements UserDetailsService {
         registeredUser.setLastName(newUser.getLastName());
         registeredUser.setRole(newUser.getRole());
         return userRepository.save(registeredUser);
+    }
+    public List<Course> findAllCourses(){
+        User currentUser = getCurrentUser();
+        return currentUser.getAssigned_courses();
     }
 }
