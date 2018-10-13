@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.dtos.UserDto;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.entities.User;
+import pl.michalskrzypek.LearningPlatform.exceptions.UserNotFoundException;
+import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 import pl.michalskrzypek.LearningPlatform.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,11 +24,14 @@ public class UserService implements UserDetailsService {
     private BCryptPasswordEncoder encoder;
 
     private UserRepository userRepository;
-    public UserService(UserRepository userRepository){
+    private CourseRepository courseRepository;
+
+    public UserService(UserRepository userRepository, CourseRepository courseRepository) {
         this.userRepository = userRepository;
+        this.courseRepository = courseRepository;
     }
 
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = (User) loadUserByUsername(userName);
         return user;
@@ -48,11 +52,13 @@ public class UserService implements UserDetailsService {
         return allUsers;
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User findById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException());
+        return user;
     }
 
-    public User saveUser(UserDto newUser){
+    public User saveUser(UserDto newUser) {
         User registeredUser = new User();
         registeredUser.setEmail(newUser.getEmail());
         registeredUser.setPassword(encoder.encode(newUser.getPassword()));
@@ -61,8 +67,18 @@ public class UserService implements UserDetailsService {
         registeredUser.setRole(newUser.getRole());
         return userRepository.save(registeredUser);
     }
-    public List<Course> findAllCourses(){
+
+    public List<Course> findAllCourses() {
         User currentUser = getCurrentUser();
         return currentUser.getAssigned_courses();
+    }
+
+    public Course assignCourse(Course course) {
+        User currentUser = getCurrentUser();
+        currentUser.getAssigned_courses().add(course);
+        course.getAssigned_users().add(currentUser);
+        userRepository.save(currentUser);
+        courseRepository.save(course);
+        return course;
     }
 }

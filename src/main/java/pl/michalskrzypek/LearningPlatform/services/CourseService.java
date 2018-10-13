@@ -7,11 +7,13 @@ import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.enums.MailType;
+import pl.michalskrzypek.LearningPlatform.exceptions.CourseNotFoundException;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 import pl.michalskrzypek.LearningPlatform.services.mails.MailService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -59,7 +61,9 @@ public class CourseService {
     }
 
     public Course findById(Long id) {
-        return courseRepository.findById(id).get();
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new CourseNotFoundException(id));
+        return course;
     }
 
     public void increaseCorrespondingCounts(Course course) {

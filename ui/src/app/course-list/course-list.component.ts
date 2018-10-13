@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Course} from "../../shared/model/Course";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CourseService} from "../../shared/service/CourseService";
+import {UserService} from "../../shared/service/UserService";
 
 @Component({
   selector: 'app-course-list',
@@ -13,7 +14,7 @@ export class CourseListComponent implements OnInit {
   category: string;
   courses: Course[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService) {
+  constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService, private userService: UserService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
@@ -30,5 +31,9 @@ export class CourseListComponent implements OnInit {
         })
       }
     });
+  }
+
+  assign(course: Course) {
+    this.userService.assignCourse(course.id);
   }
 }
