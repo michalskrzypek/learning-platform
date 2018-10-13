@@ -34,6 +34,8 @@ export class CourseListComponent implements OnInit {
   }
 
   assign(course: Course) {
-    this.userService.assignCourse(course.id);
+    this.userService.assignCourse(course.id).subscribe(data => {
+      this.router.navigate(['/my-courses']);
+    });
   }
 }
