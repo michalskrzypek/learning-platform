@@ -44,8 +44,14 @@ public class CategoryService {
         return category;
     }
 
-    public void addCount(Category category){
+    public void increaseCount(Category category){
         int newCount = category.getCount() + 1;
+        category.setCount(newCount);
+        categoryRepository.save(category);
+    }
+
+    public void decreaseCount(Category category){
+        int newCount = category.getCount() - 1;
         category.setCount(newCount);
         categoryRepository.save(category);
     }

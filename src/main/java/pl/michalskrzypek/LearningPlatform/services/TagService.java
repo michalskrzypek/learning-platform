@@ -20,7 +20,7 @@ public class TagService {
 
     public List<Tag> getAllByNames(List<String> tagsNames) {
         List<Tag> tags = new ArrayList<>(tagsNames.size());
-        tagsNames.stream()
+        tagsNames
                 .forEach(tagName -> {
                     Tag tag = getByName(tagName);
                     tags.add(tag);
@@ -53,14 +53,26 @@ public class TagService {
                 });
     }
 
-    public void addCount(List<Tag> tags) {
+    public void increaseCount(List<Tag> tags) {
         Optional.ofNullable(tags)
             .ifPresent(tagsList -> tagsList.stream()
-                                    .forEach(t -> addCount(t)));
+                                    .forEach(t -> increaseCount(t)));
     }
 
-    public void addCount(Tag tag) {
+    public void increaseCount(Tag tag) {
         int newCount = tag.getCount() + 1;
+        tag.setCount(newCount);
+        tagRepository.save(tag);
+    }
+
+    public void decreaseCount(List<Tag> tags) {
+        Optional.ofNullable(tags)
+                .ifPresent(tagsList -> tagsList
+                        .forEach(t -> decreaseCount(t)));
+    }
+
+    public void decreaseCount(Tag tag) {
+        int newCount = tag.getCount() - 1;
         tag.setCount(newCount);
         tagRepository.save(tag);
     }

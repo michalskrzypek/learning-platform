@@ -45,11 +45,13 @@ public class CourseController {
     @IsAdminOrInstructor
     @ResponseStatus(HttpStatus.CREATED)
     public Course addNewCourse(@Valid @RequestBody CourseDto courseDto) {
-        Optional.ofNullable(courseDto.getTags())
-                .ifPresent(tags -> tagService.saveNewTags(courseDto.getTags()));
+        return courseService.save(courseDto);
+    }
 
-        Course newCourse = courseService.save(courseDto);
-        courseService.increaseCorrespondingCounts(newCourse);
-        return newCourse;
+    @DeleteMapping("/{courseId}")
+    @IsAdminOrInstructor
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCourse(@PathVariable Long courseId){
+        courseService.deleteCourse(courseId);
     }
 }

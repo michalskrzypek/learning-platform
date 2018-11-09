@@ -5,6 +5,7 @@ import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.dtos.converters.CourseDtoConverter;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
+import pl.michalskrzypek.LearningPlatform.entities.Tag;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.enums.MailType;
 import pl.michalskrzypek.LearningPlatform.exceptions.CourseNotFoundException;
@@ -36,17 +37,6 @@ public class CourseService {
         this.mailService = mailService;
     }
 
-    public Course save(CourseDto courseDto) {
-        Course course = courseDtoConverter.convert(courseDto);
-
-        User instructor = userService.getCurrentUser();
-        course.setInstructor(instructor);
-        courseRepository.save(course);
-
-        mailService.notifyUser(instructor, MailType.NEW_COURSE);
-        return course;
-    }
-
     public List<Course> findAll() {
         List<Course> allCourses = new ArrayList<>();
         courseRepository.findAll().forEach(c -> allCourses.add(c));
@@ -60,14 +50,48 @@ public class CourseService {
         return courses;
     }
 
+    public Course save(CourseDto courseDto) {
+        saveNewTags(courseDto);
+
+        Course course = courseDtoConverter.convert(courseDto);
+        User instructor = userService.getCurrentUser();
+        course.setInstructor(instructor);
+        Course savedCourse = courseRepository.save(course);
+
+        increaseCorrespondingCounts(savedCourse);
+        notifyInstructorAboutCreatedCourse(instructor);
+
+        return course;
+    }
+
+    private void saveNewTags(CourseDto courseDto){
+        Optional.ofNullable(courseDto.getTags())
+                .ifPresent(tags -> tagService.saveNewTags(courseDto.getTags()));
+    }
+
+    private void increaseCorrespondingCounts(Course course) {
+        categoryService.increaseCount(course.getCategory());
+        tagService.increaseCount(course.getTags());
+    }
+
+    private void notifyInstructorAboutCreatedCourse(User instructor){
+        mailService.notifyUser(instructor, MailType.NEW_COURSE);
+    }
+
+    public void deleteCourse(Long id) {
+        Course courseToDelete = findById(id);
+        decreaseCorrespondingCounts(courseToDelete);
+        courseRepository.delete(courseToDelete);
+    }
+
     public Course findById(Long id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException(id));
         return course;
     }
 
-    public void increaseCorrespondingCounts(Course course) {
-        categoryService.addCount(course.getCategory());
-        tagService.addCount(course.getTags());
+    private void decreaseCorrespondingCounts(Course course) {
+        categoryService.decreaseCount(course.getCategory());
+        tagService.decreaseCount(course.getTags());
     }
 }
