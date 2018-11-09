@@ -5,7 +5,6 @@ import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.dtos.converters.CourseDtoConverter;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
-import pl.michalskrzypek.LearningPlatform.entities.Tag;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.enums.MailType;
 import pl.michalskrzypek.LearningPlatform.exceptions.CourseNotFoundException;
@@ -64,7 +63,7 @@ public class CourseService {
         return course;
     }
 
-    private void saveNewTags(CourseDto courseDto){
+    private void saveNewTags(CourseDto courseDto) {
         Optional.ofNullable(courseDto.getTags())
                 .ifPresent(tags -> tagService.saveNewTags(courseDto.getTags()));
     }
@@ -74,13 +73,14 @@ public class CourseService {
         tagService.increaseCount(course.getTags());
     }
 
-    private void notifyInstructorAboutCreatedCourse(User instructor){
+    private void notifyInstructorAboutCreatedCourse(User instructor) {
         mailService.notifyUser(instructor, MailType.NEW_COURSE);
     }
 
     public void deleteCourse(Long id) {
         Course courseToDelete = findById(id);
         decreaseCorrespondingCounts(courseToDelete);
+        notifyInstructorAboutDeletedCourse(courseToDelete.getInstructor());
         courseRepository.delete(courseToDelete);
     }
 
@@ -93,5 +93,9 @@ public class CourseService {
     private void decreaseCorrespondingCounts(Course course) {
         categoryService.decreaseCount(course.getCategory());
         tagService.decreaseCount(course.getTags());
+    }
+
+    private void notifyInstructorAboutDeletedCourse(User instructor) {
+        mailService.notifyUser(instructor, MailType.DELETED_COURSE);
     }
 }

@@ -2,3 +2,6 @@ mails:
   courseCreated:
     title: New course added!
     templateName: new-course
+  courseDeleted:
+    title: Your course has been deleted.
+    templateName: deleted-course

@@ -1,7 +1,8 @@
-package pl.michalskrzypek.LearningPlatform.services.mails;
+package pl.michalskrzypek.LearningPlatform.services.mails.templates;
 
 import org.springframework.stereotype.Component;
 import pl.michalskrzypek.LearningPlatform.config.MailConfig;
+import pl.michalskrzypek.LearningPlatform.services.mails.MailTemplate;
 
 @Component
 public class NewCourseMailTemplate extends MailTemplate {
