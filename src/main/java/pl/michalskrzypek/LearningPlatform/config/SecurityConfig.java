@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/token/*",
             "/register/user",
             "/signup",
-            "/home"
+            "/home",
+            "/categories"
     };
 
     @Override

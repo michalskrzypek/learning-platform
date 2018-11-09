@@ -2,6 +2,7 @@ package pl.michalskrzypek.LearningPlatform.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.michalskrzypek.LearningPlatform.annotations.IsAdminOrInstructor;
 import pl.michalskrzypek.LearningPlatform.annotations.IsInstructor;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
@@ -41,7 +42,7 @@ public class CourseController {
     }
 
     @PostMapping
-    @IsInstructor
+    @IsAdminOrInstructor
     @ResponseStatus(HttpStatus.CREATED)
     public Course addNewCourse(@Valid @RequestBody CourseDto courseDto) {
         Optional.ofNullable(courseDto.getTags())

@@ -53,7 +53,7 @@ public class Course {
     private List<Review> reviews;
 
     @Min(value = 0)
-    private Integer purchases = 0;
+    private Integer enrollments = 0;
 
     @Override
     public String toString() {

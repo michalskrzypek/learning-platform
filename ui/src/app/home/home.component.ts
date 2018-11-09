@@ -28,6 +28,10 @@ export class HomeComponent implements OnInit {
     this.authService.getCurrentUser().subscribe(data => {
       this.user = data;
     })
+
+    if (this.tokenStorage.getToken() != null) {
+      this.token = this.tokenStorage.getToken();
+    }
   }
 
   showCourses(): void {

@@ -1,19 +1,85 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
 
+  <title>Home | Learning platform</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/">
+
+  <!-- Bootstrap core CSS -->
+  <!--<link href="../../dist/css/bootstrap.min.css" rel="stylesheet">-->
+
+  <!-- Custom styles for this template -->
+  <!--<link href="narrow-jumbotron.css" rel="stylesheet">-->
 </head>
 
 <body>
-<div [hidden]="!isAuthenticated()">
-  <div class="lol">
-    <p> TOKEN: {{token}}</p>
-  </div>
-  <p> USER: {{user.email}}</p>
 
-  <div *ngFor="let course of courses">
-    {{course.title}}
-  </div>
+<div class="lol">
+  <p> TOKEN: {{token}}</p>
 </div>
+<p> USER: {{user.email}}</p>
 
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4">Learning platform</h1>
+    <h3 class="display-6">by Michal Skrzypek</h3>
+    <p class="lead">I created this SPA from scratch so I could get
+      more familiar with REST applications and the Angular framework. The application is based on Spring BOOT together
+      with Spring Data and Spring Security. Moreover, JWT authentication was implemented to deal better with user
+      authentication.</p>
+    <p><a class="btn btn-lg btn-success my-but" target="_blank" rel="noopener noreferrer" href="http://github.com/michalskrzypek" role="button">My GitHub
+      account</a>
+      <a class="btn btn-lg btn-success my-but" target="_blank" rel="noopener noreferrer" href="http://linkedin.com/michal-skrzypek" role="button">My LinkedIn
+        account</a>
+    </p>
+  </div>
+
+  <div class="row marketing">
+    <div class="col-lg-6">
+      <h4>Using the application as a regular user</h4>
+      <p>First you need to create an user account. Then, after logging in, you will be able to look through all the
+        courses available. Courses are sorted by the categories. You
+        can add the course you are interested about to your courses. All of your courses can be seen in the "My courses"
+        tab.</p>
+
+      <h4>Subheading</h4>
+      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet
+        fermentum.</p>
+
+      <h4>Subheading</h4>
+      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+    </div>
+
+    <div class="col-lg-6">
+      <h4>Using the application as an instructor</h4>
+      <p>First you need to create an instructor account. Then, after logging in, you will be able to look through all
+        the courses available AND ALSO add your unique course. It can be done by filling the form that you can find by
+        pressing "Add new course!" button in the navbar. ONLY USERS WITH THE <b>INSTRUCTOR ROLE</b> have access to that form.</p>
+
+      <h4>Subheading</h4>
+      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet
+        fermentum.</p>
+
+      <h4>Subheading</h4>
+      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; Michal Skrzypek 2018</p>
+  </footer>
+
+</div> <!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
