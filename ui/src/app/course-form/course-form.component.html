@@ -1,0 +1,47 @@
+<html>
+<head>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="../js/bootstrap-tagsinput.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+</head>
+
+<body id="LoginForm">
+
+<div class="container">
+  <div class="login-form">
+    <div class="main-div">
+      <div class="panel">
+        <h2>Add your new course!</h2>
+        <p>Please provide all the important information about the course you are adding to our site. Later, upload the
+          course content files.</p>
+      </div>
+      <form (submit)="save()">
+        <div class="form-group">
+          <label for="title" class="col-form-label course-form-label">Title:</label>
+          <input type="text" class="form-control" id="title" placeholder="Title..."
+                 [(ngModel)]="theCourse.title" name="title">
+
+          <label for="desc" class="col-form-label course-form-label">Description:</label>
+          <textarea class="form-control" id="desc" placeholder="Desc..."
+                    [(ngModel)]="theCourse.description" name="desc" autosize></textarea>
+
+          <label for="category" class="col-form-label course-form-label">Category:</label>
+          <select class="form-control" id="category" name="category" [(ngModel)]="theCourse.category">
+            <option *ngFor="let category of categories" [value]="category.name">
+              {{category.name}}
+            </option>
+          </select>
+
+          <label for="category" class="col-form-label course-form-label">Tags:</label>
+          <tag-input name="tags" id="tags" [modelAsStrings]="true" [(ngModel)]="theCourse.tags"></tag-input>
+        </div>
+        <button type="submit" class="btn btn-success btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

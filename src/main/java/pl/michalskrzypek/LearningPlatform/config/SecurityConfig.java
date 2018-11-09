@@ -21,19 +21,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private JWTAuthenticationEntryPoint unauthorizedHandler;
-
     @Autowired
     public JWTAuthenticationFilter authenticationTokenFilterBean;
 
     private static final String LOGIN_URL = "/login";
-
     private static final String[] PERMIT_URLS = {
             LOGIN_URL,
             "/*.css",
-            "/resources/**"
+            "/resources/**",
+            "/token/*",
+            "/register/user",
+            "/signup",
+            "/home",
+            "/categories"
     };
 
     @Override
@@ -57,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/token/*", "/register/user", "/categories/**", "/courses/**").permitAll()
+                .antMatchers(PERMIT_URLS).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

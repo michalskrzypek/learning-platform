@@ -8,10 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 
 @Component
 @SpringBootApplication
+@EnableAsync
 public class LearningPlatformApplication {
 
 	public static void main(String[] args) {
@@ -23,7 +25,8 @@ public class LearningPlatformApplication {
 		PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
 		YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
 		ImmutableList<ClassPathResource> resources = ImmutableList.of(
-				new ClassPathResource("categories.yml"));
+				new ClassPathResource("categories.yml"),
+				new ClassPathResource("mails.yml"));
 		yaml.setResources(Iterables.toArray(resources, ClassPathResource.class));
 		propertySourcesPlaceholderConfigurer.setProperties(yaml.getObject());
 		return propertySourcesPlaceholderConfigurer;

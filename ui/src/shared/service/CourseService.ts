@@ -1,13 +1,18 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
+import {Course} from "../model/Course";
 
 @Injectable()
 export class CourseService {
 
-  apiRoot : string = "http://localhost:8080/courses"
+  private apiRoot : string = "http://localhost:8080/courses"
 
   constructor(private http: HttpClient){
+  }
+
+  save(course: Course) : Observable<any> {
+    return this.http.post(this.apiRoot, course);
   }
 
   findAllByCategory(category: string) : Observable<any>{
@@ -15,7 +20,7 @@ export class CourseService {
   }
 
   findAll() : Observable<any>{
-    return this.http.get(this.apiRoot + '/all');
+    return this.http.get(this.apiRoot);
   }
 
 }

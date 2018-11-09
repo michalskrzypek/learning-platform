@@ -20,10 +20,16 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import {CategoryService} from "../shared/service/CategoryService";
 import { CourseListComponent } from './course-list/course-list.component';
+import { CourseFormComponent } from './course-form/course-form.component';
+import {AutoSizeDirective} from "../shared/directive/AutoSizeDirective";
+import {TagInputModule} from "ngx-chips";
+import { MyCoursesComponent } from './my-courses/my-courses.component';
+import {UserService} from "../shared/service/UserService";
 
 @NgModule({
   declarations: [
     AppComponent,
+    AutoSizeDirective,
     NavbarComponent,
     HomeComponent,
     CourseItemComponent,
@@ -31,6 +37,8 @@ import { CourseListComponent } from './course-list/course-list.component';
     LoginComponent,
     SignupComponent,
     CourseListComponent,
+    CourseFormComponent,
+    MyCoursesComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,12 +49,15 @@ import { CourseListComponent } from './course-list/course-list.component';
     RouterModule.forRoot([
       {path: '', pathMatch: 'full', redirectTo: 'home'},
       {path: "home", component: HomeComponent},
+      {path: "course/new", component: CourseFormComponent},
       {path: "course/:id", component: CourseDetailsComponent},
+      {path: "courses/all", component: CourseListComponent},
       {path: "courses/:category", component: CourseListComponent},
-      {path: "courses", component: CourseListComponent},
+      {path: "my-courses", component: MyCoursesComponent},
       {path: "login", component: LoginComponent},
       {path: "signup", component: SignupComponent}
     ]),
+    TagInputModule,
     ToastrModule.forRoot({
       timeOut: 3000
     })
@@ -56,6 +67,7 @@ import { CourseListComponent } from './course-list/course-list.component';
     CategoryService,
     CourseService,
     TokenStorage,
+    UserService,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi: true}

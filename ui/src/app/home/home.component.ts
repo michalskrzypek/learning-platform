@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseService} from "../../shared/service/CourseService";
 import {TokenStorage} from "../../shared/TokenStorage";
+import {AuthService} from "../../shared/service/AuthService";
+import {User} from "../../shared/model/User";
 
 @Component({
   selector: 'app-home',
@@ -9,26 +11,36 @@ import {TokenStorage} from "../../shared/TokenStorage";
 })
 export class HomeComponent implements OnInit {
 
-  email: string = "To jest adres email.";
-
+  user: User;
+  token: string = "";
   courses = {}
 
-  constructor(private coursesService: CourseService, private tokenStorage: TokenStorage) {
 
+  constructor(private coursesService: CourseService, private tokenStorage: TokenStorage,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.coursesService.findAll().subscribe(data => {
       this.courses = data;
+    });
+
+    this.authService.getCurrentUser().subscribe(data => {
+      this.user = data;
     })
+
+    if (this.tokenStorage.getToken() != null) {
+      this.token = this.tokenStorage.getToken();
+    }
   }
 
-  showCourses():void {
+  showCourses(): void {
 
   }
 
   isAuthenticated() {
     if (this.tokenStorage.getToken() != null) {
+      this.token = this.tokenStorage.getToken();
       return true;
     }
     this.tokenStorage.removeToken();

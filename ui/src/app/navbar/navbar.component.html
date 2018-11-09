@@ -18,10 +18,17 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a *ngFor="let category of categories" class="dropdown-item" [routerLink]="['/courses', category.name]">{{category.name}}</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/courses">All</a>
+          <a class="dropdown-item" routerLink="/courses/all">All</a>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/course/new" routerLinkActive="active">Add new course!</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/my-courses" routerLinkActive="active">My courses</a>
+      </li>
     </ul>
+
 
     <ul class="navbar-nav mr-2">
       <li class="nav-item" *ngIf="!isAuthenticated()">

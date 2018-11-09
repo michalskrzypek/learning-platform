@@ -1,0 +1,15 @@
+.lol {
+  max-width: 100%;
+}
+
+.lol p{
+  word-break: break-word;
+}
+
+div .jumbotron{
+  padding: 30px;
+}
+
+.my-but {
+  margin-right: 1%;
+}

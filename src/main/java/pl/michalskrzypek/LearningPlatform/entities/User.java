@@ -45,10 +45,10 @@ public class User implements UserDetails, Serializable {
     private List<Review> reviews;
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "course_student",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    @ManyToMany(mappedBy = "assigned_users")
+/*    @JoinTable(name = "course_user",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))*/
     private List<Course> assigned_courses;
 
     @JsonIgnore

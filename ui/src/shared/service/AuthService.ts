@@ -7,6 +7,7 @@ import {LoginUser} from "../model/LoginUser";
 
 const generateTokenURL: string = GlobalVariable.BASE_API_URL+"/token/generate-token"
 const registerUserURL: string = GlobalVariable.BASE_API_URL+"/register/user"
+const currentUserURL: string = GlobalVariable.BASE_API_URL+"/users/current"
 
 @Injectable()
 export class AuthService {
@@ -20,5 +21,9 @@ export class AuthService {
 
   signup(user: User) : Observable<any> {
     return this.http.post(registerUserURL, user);
+  }
+
+  getCurrentUser() : Observable<any> {
+    return this.http.get(currentUserURL);
   }
 }

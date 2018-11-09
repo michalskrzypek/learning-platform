@@ -43,4 +43,10 @@ public class CategoryService {
         Category category = optionalCategory.orElseThrow(() -> new CategoryNotFoundException(categoryName));
         return category;
     }
+
+    public void addCount(Category category){
+        int newCount = category.getCount() + 1;
+        category.setCount(newCount);
+        categoryRepository.save(category);
+    }
 }
