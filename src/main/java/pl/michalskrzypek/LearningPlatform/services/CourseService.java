@@ -45,23 +45,27 @@ public class CourseService {
         return course;
     }
 
-    public Page<Course> findAll(Pageable pageable) {
+    public Page<Course> getAll(Pageable pageable) {
         return courseRepository.findAll(pageable);
     }
 
-    public Page<Course> findAllByCategory(String categoryName, Pageable pageable) {
-        Category category = categoryService.findByName(categoryName);
+    public Page<Course> getAllByCategory(String categoryName, Pageable pageable) {
+        Category category = categoryService.getCategoryByName(categoryName);
         return courseRepository.findByCategory(category, pageable);
     }
 
-    public Course findById(Long id) {
-        Course course = courseRepository.findById(id)
+    public Course getById(Long id) {
+        return courseRepository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException(id));
-        return course;
     }
 
     public void increaseCorrespondingCounts(Course course) {
-        categoryService.addCount(course.getCategory());
+        categoryService.increaseCount(course.getCategory(), 1);
         tagService.addCount(course.getTags());
+    }
+
+    public void increaseEnrollments(Course course, int incValue) {
+        int newCount = course.getEnrollments() + incValue;
+        course.setEnrollments(newCount);
     }
 }

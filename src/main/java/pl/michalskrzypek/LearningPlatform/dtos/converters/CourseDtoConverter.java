@@ -18,12 +18,10 @@ public class CourseDtoConverter {
 
     private CategoryService categoryService;
     private TagService tagService;
-    private UserService userService;
 
-    public CourseDtoConverter(CourseRepository courseRepository, CategoryService categoryService, TagService tagService, UserService userService) {
+    public CourseDtoConverter(CategoryService categoryService, TagService tagService) {
         this.categoryService = categoryService;
         this.tagService = tagService;
-        this.userService = userService;
     }
 
     public Course convert(CourseDto from){
@@ -31,14 +29,13 @@ public class CourseDtoConverter {
         course.setTitle(from.getTitle());
         course.setDescription(from.getDescription());
 
-        Category category = categoryService.findByName(from.getCategory());
+        Category category = categoryService.getCategoryByName(from.getCategory());
         course.setCategory(category);
 
         Optional.ofNullable(from.getTags()).ifPresent(tags -> {
             List<Tag> courseTags = tagService.getAllByNames(tags);
             course.setTags(courseTags);
         });
-
         return course;
     }
 }

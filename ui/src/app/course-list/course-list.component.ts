@@ -16,11 +16,9 @@ export class CourseListComponent implements OnInit {
   courses: Course[];
 
   pager = new Pager();
-  totalPages = new Array(10);
 
   constructor(private route: ActivatedRoute, private router: Router, private courseService: CourseService, private userService: UserService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-
   }
 
   ngOnInit() {

@@ -5,9 +5,8 @@ import {User} from "../model/User";
 import {GlobalVariable} from "../util/Globals";
 import {LoginUser} from "../model/LoginUser";
 
-const generateTokenURL: string = GlobalVariable.BASE_API_URL+"/token/generate-token"
-const registerUserURL: string = GlobalVariable.BASE_API_URL+"/register/user"
-const currentUserURL: string = GlobalVariable.BASE_API_URL+"/users/current"
+const generateTokenURL: string = GlobalVariable.BASE_API_URL + "/token/generate-token"
+const usersURL: string = GlobalVariable.BASE_API_URL + "/users"
 
 @Injectable()
 export class AuthService {
@@ -20,10 +19,10 @@ export class AuthService {
   }
 
   signup(user: User) : Observable<any> {
-    return this.http.post(registerUserURL, user);
+    return this.http.post(usersURL + "/register", user);
   }
 
   getCurrentUser() : Observable<any> {
-    return this.http.get(currentUserURL);
+    return this.http.get(usersURL + "/current");
   }
 }

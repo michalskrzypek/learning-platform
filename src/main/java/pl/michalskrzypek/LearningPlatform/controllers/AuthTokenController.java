@@ -17,12 +17,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/token")
-public class AuthController {
+public class AuthTokenController {
 
     private AuthenticationManager authenticationManager;
     private JWTTokenUtil jwtTokenUtil;
     private UserService userService;
-    public AuthController(AuthenticationManager authenticationManager, JWTTokenUtil jwtTokenUtil, UserService userService){
+
+    public AuthTokenController(AuthenticationManager authenticationManager, JWTTokenUtil jwtTokenUtil, UserService userService){
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userService = userService;
@@ -37,6 +38,7 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(username,password)
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         final User authenticatedUser = (User) userService.loadUserByUsername(username);
         final String token = jwtTokenUtil.generateToken(authenticatedUser);
         return new AuthToken(token);
