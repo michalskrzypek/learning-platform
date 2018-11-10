@@ -1,5 +1,7 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.dtos.converters.CourseDtoConverter;
@@ -10,10 +12,6 @@ import pl.michalskrzypek.LearningPlatform.enums.MailType;
 import pl.michalskrzypek.LearningPlatform.exceptions.CourseNotFoundException;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 import pl.michalskrzypek.LearningPlatform.services.mails.MailService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CourseService {
@@ -47,17 +45,13 @@ public class CourseService {
         return course;
     }
 
-    public List<Course> findAll() {
-        List<Course> allCourses = new ArrayList<>();
-        courseRepository.findAll().forEach(c -> allCourses.add(c));
-        return allCourses;
+    public Page<Course> findAll(Pageable pageable) {
+        return courseRepository.findAll(pageable);
     }
 
-    public List<Course> findAllByCategory(String categoryName) {
-        List<Course> courses = new ArrayList<>();
+    public Page<Course> findAllByCategory(String categoryName, Pageable pageable) {
         Category category = categoryService.findByName(categoryName);
-        courseRepository.findByCategory(category).forEach(c -> courses.add(c));
-        return courses;
+        return courseRepository.findByCategory(category, pageable);
     }
 
     public Course findById(Long id) {

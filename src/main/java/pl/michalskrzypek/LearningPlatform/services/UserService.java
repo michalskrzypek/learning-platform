@@ -77,8 +77,14 @@ public class UserService implements UserDetailsService {
         User currentUser = getCurrentUser();
         currentUser.getAssigned_courses().add(course);
         course.getAssigned_users().add(currentUser);
+        increaseEnrollments(course, 1);
         userRepository.save(currentUser);
         courseRepository.save(course);
         return course;
+    }
+
+    private void increaseEnrollments(Course course, int incValue) {
+        int newCount = course.getEnrollments() + incValue;
+        course.setEnrollments(newCount);
     }
 }

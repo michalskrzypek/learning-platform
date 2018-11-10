@@ -1,5 +1,7 @@
 package pl.michalskrzypek.LearningPlatform.controllers;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.michalskrzypek.LearningPlatform.annotations.IsAdminOrInstructor;
@@ -27,8 +29,8 @@ public class CourseController {
     }
 
     @GetMapping("/{category}")
-    public List<Course> getCoursesByCategory(@PathVariable String category) {
-        return courseService.findAllByCategory(category);
+    public Page<Course> getCoursesByCategory(@PathVariable String category, Pageable pageable) {
+        return courseService.findAllByCategory(category, pageable);
     }
 
     @GetMapping(params = {"id"})
@@ -37,8 +39,8 @@ public class CourseController {
     }
 
     @GetMapping
-    public List<Course> getAllCourses() {
-        return courseService.findAll();
+    public Page<Course> getAllCourses(Pageable pageable) {
+        return courseService.findAll(pageable);
     }
 
     @PostMapping
