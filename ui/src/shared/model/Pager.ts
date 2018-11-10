@@ -1,6 +1,6 @@
 export class Pager {
   number: number = 0;
-  size: number = 9;
+  size: number = 6;
   totalElements: number;
   totalPages: number;
   first: boolean = true;

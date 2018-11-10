@@ -50,30 +50,27 @@ export class CourseListComponent implements OnInit {
   changePage(page: number) {
     this.pager.number = page;
 
-    this.route.params.subscribe(params => {
-      if (params['category'] != null) {
-        this.category = params['category'];
-        this.courseService.findAllByCategory(this.category).subscribe(data => {
-          this.courses = data['content'];
-        });
-      } else {
-        this.courseService.findAll(this.pager).subscribe(data => {
-          this.courses = data['content'];
-          this.pager.totalElements = data['totalElements'];
-          this.pager.totalPages = data['totalPages'];
-          this.pager.first = data['first'];
-          this.pager.last = data['last'];
-          console.log(this.pager);
-        })
-      }
-    });
-  }
+    if (this.category != null) {
+      this.courseService.findAllByCategory(this.category, this.pager).subscribe(data => {
+        this.courses = data['content'];
+        this.setPager(data);
+      });
+    } else {
+      this.courseService.findAll(this.pager).subscribe(data => {
+        this.courses = data['content'];
+        this.setPager(data);
+      })
+    }
+  };
 
   counter(i: number) {
     return new Array(i);
   }
 
-  assign(course: Course) {
+  assign(course
+           :
+           Course
+  ) {
     this.userService.assignCourse(course.id).subscribe(data => {
       this.router.navigate(['/my-courses']);
     });
