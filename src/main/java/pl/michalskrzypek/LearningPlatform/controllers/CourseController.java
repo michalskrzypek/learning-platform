@@ -32,6 +32,7 @@ public class CourseController {
     }
 
     @GetMapping(params = {"id"})
+    @ResponseStatus(HttpStatus.OK)
     public Course getCourseById(@RequestParam Long id) {
         return courseService.findById(id);
     }
