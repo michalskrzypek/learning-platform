@@ -24,12 +24,10 @@ public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
     private CourseRepository courseRepository;
-    private CourseService courseService;
 
-    public UserService(UserRepository userRepository, CourseRepository courseRepository, CourseService courseService) {
+    public UserService(UserRepository userRepository, CourseRepository courseRepository) {
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
-        this.courseService = courseService;
     }
 
     public User getCurrentUser() {
@@ -72,17 +70,21 @@ public class UserService implements UserDetailsService {
         return currentUser.getAssigned_courses();
     }
 
-    public Course assignCourseToTheCurrentUser(Long courseId) {
-        Course courseToAssign = courseService.getById(courseId);
-
+    public Course assignCourseToTheCurrentUser(Course courseToAssign) {
         User currentUser = getCurrentUser();
         currentUser.getAssigned_courses().add(courseToAssign);
 
         courseToAssign.getAssigned_users().add(currentUser);
-        courseService.increaseEnrollments(courseToAssign, 1);
+        updateCourseEnrollments(courseToAssign);
         courseRepository.save(courseToAssign);
         userRepository.save(currentUser);
         return courseToAssign;
     }
+
+    private void updateCourseEnrollments(Course course) {
+        int newCount = course.getAssigned_users().size();
+        course.setEnrollments(newCount);
+    }
+
 
 }

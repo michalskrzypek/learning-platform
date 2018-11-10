@@ -21,10 +21,6 @@ export class CourseService {
     return this.http.get(this.apiRoot + '/' + category, {params : params});
   }
 
-  findAll() : Observable<any>{
-    return this.http.get(this.apiRoot);
-  }
-
   findAll(pager: Pager) : Observable<any>{
     let params = new HttpParams().append('page', new String(pager.number)).append('size', new String(pager.size));
     return this.http.get(this.apiRoot, {params : params});

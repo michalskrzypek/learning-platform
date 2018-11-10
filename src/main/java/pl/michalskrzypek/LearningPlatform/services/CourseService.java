@@ -63,9 +63,4 @@ public class CourseService {
         categoryService.increaseCount(course.getCategory(), 1);
         tagService.addCount(course.getTags());
     }
-
-    public void increaseEnrollments(Course course, int incValue) {
-        int newCount = course.getEnrollments() + incValue;
-        course.setEnrollments(newCount);
-    }
 }

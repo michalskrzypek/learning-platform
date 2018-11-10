@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseService} from "../../shared/service/CourseService";
 import {TokenStorage} from "../../shared/TokenStorage";
-import {AuthService} from "../../shared/service/AuthService";
 import {User} from "../../shared/model/User";
+import {UserService} from "../../shared/service/UserService";
 
 @Component({
   selector: 'app-home',
@@ -15,11 +15,11 @@ export class HomeComponent implements OnInit {
   token: string = "";
 
   constructor(private coursesService: CourseService, private tokenStorage: TokenStorage,
-              private authService: AuthService) {
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.authService.getCurrentUser().subscribe(data => {
+    this.userService.getCurrentUser().subscribe(data => {
       this.user = data;
     })
 

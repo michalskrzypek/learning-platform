@@ -21,8 +21,4 @@ export class AuthService {
   signup(user: User) : Observable<any> {
     return this.http.post(usersURL + "/register", user);
   }
-
-  getCurrentUser() : Observable<any> {
-    return this.http.get(usersURL + "/current");
-  }
 }

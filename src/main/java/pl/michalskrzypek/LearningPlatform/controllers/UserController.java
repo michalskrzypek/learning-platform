@@ -52,6 +52,7 @@ public class UserController {
     @PutMapping("/courses/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Course assignCourseToTheCurrentUser(@PathVariable("id") Long courseId) {
-        return userService.assignCourseToTheCurrentUser(courseId);
+        Course courseToAssign = courseService.getById(courseId);
+        return userService.assignCourseToTheCurrentUser(courseToAssign);
     }
 }
