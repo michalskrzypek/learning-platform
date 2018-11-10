@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Course} from "../model/Course";
+import {Pager} from "../model/Pager";
 
 @Injectable()
 export class CourseService {
@@ -15,12 +16,14 @@ export class CourseService {
     return this.http.post(this.apiRoot, course);
   }
 
-  findAllByCategory(category: string) : Observable<any>{
-    return this.http.get(this.apiRoot + '/' + category);
+  findAllByCategory(category: string, pager: Pager) : Observable<any>{
+    let params = new HttpParams().append('page', pager.number).append('size', pager.size);
+    return this.http.get(this.apiRoot + '/' + category, {params : params});
   }
 
-  findAll() : Observable<any>{
-    return this.http.get(this.apiRoot);
+  findAll(pager: Pager) : Observable<any>{
+    let params = new HttpParams().append('page', pager.number).append('size', pager.size);
+    return this.http.get(this.apiRoot, {params : params});
   }
 
 }

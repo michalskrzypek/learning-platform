@@ -16,19 +16,19 @@ public class CategoryController {
 
     @Value("${categories.sort.property}")
     private String defaultSortProperty;
-
     private CategoryService categoryService;
+
     public CategoryController (CategoryService categoryService){
         this.categoryService = categoryService;
     }
 
     @GetMapping(params = {"sort", "desc"})
     public List<Category> getAllCategoriesSorted(@RequestParam("sort") String sortProperty, @RequestParam("desc") boolean descending){
-        return categoryService.findAllCategories(sortProperty, descending);
+        return categoryService.getAllCategories(sortProperty, descending);
     }
 
     @GetMapping
     public List<Category> getAllCategories(){
-        return categoryService.findAllCategories();
+        return categoryService.getAllCategories();
     }
 }

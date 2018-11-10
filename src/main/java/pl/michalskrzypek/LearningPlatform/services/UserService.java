@@ -14,7 +14,6 @@ import pl.michalskrzypek.LearningPlatform.exceptions.UserNotFoundException;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 import pl.michalskrzypek.LearningPlatform.repositories.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,14 +45,12 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public List<User> findAll() {
-        List<User> allUsers = new ArrayList<>();
-        userRepository.findAll().forEach(u -> allUsers.add(u));
-        return allUsers;
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
-    public User findById(Long id) {
-        User user = userRepository.findById(id)
+    public User getById(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException());
         return user;
     }
@@ -68,17 +65,26 @@ public class UserService implements UserDetailsService {
         return userRepository.save(registeredUser);
     }
 
-    public List<Course> findAllCourses() {
+    public List<Course> getCoursesOfTheCurrentUser() {
         User currentUser = getCurrentUser();
         return currentUser.getAssigned_courses();
     }
 
-    public Course assignCourse(Course course) {
+    public Course assignCourseToTheCurrentUser(Course courseToAssign) {
         User currentUser = getCurrentUser();
-        currentUser.getAssigned_courses().add(course);
-        course.getAssigned_users().add(currentUser);
+        currentUser.getAssigned_courses().add(courseToAssign);
+
+        courseToAssign.getAssigned_users().add(currentUser);
+        updateCourseEnrollments(courseToAssign);
+        courseRepository.save(courseToAssign);
         userRepository.save(currentUser);
-        courseRepository.save(course);
-        return course;
+        return courseToAssign;
     }
+
+    private void updateCourseEnrollments(Course course) {
+        int newCount = course.getAssigned_users().size();
+        course.setEnrollments(newCount);
+    }
+
+
 }

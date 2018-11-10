@@ -6,8 +6,8 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -33,7 +33,7 @@ public class Course {
     @JoinTable(name = "course_tag",
     joinColumns = @JoinColumn(name = "course_id"),
     inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
+    private Set<Tag> tags;
 
     @NotNull
     @JsonIgnore
@@ -46,14 +46,14 @@ public class Course {
     @JoinTable(name = "course_user",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> assigned_users;
+    private Set<User> assigned_users;
 
     @JoinColumn(name = "course_id")
     @OneToMany(cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     @Min(value = 0)
-    private Integer enrollments = 0;
+    private Integer enrollments;
 
     @Override
     public String toString() {

@@ -5,9 +5,7 @@ import pl.michalskrzypek.LearningPlatform.entities.Tag;
 import pl.michalskrzypek.LearningPlatform.exceptions.TagNotFoundException;
 import pl.michalskrzypek.LearningPlatform.repositories.TagRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TagService {
@@ -18,8 +16,8 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public List<Tag> getAllByNames(List<String> tagsNames) {
-        List<Tag> tags = new ArrayList<>(tagsNames.size());
+    public Set<Tag> getAllByNames(List<String> tagsNames) {
+        Set<Tag> tags = new HashSet<>(tagsNames.size());
         tagsNames.stream()
                 .forEach(tagName -> {
                     Tag tag = getByName(tagName);
@@ -53,7 +51,7 @@ public class TagService {
                 });
     }
 
-    public void addCount(List<Tag> tags) {
+    public void addCount(Set<Tag> tags) {
         Optional.ofNullable(tags)
             .ifPresent(tagsList -> tagsList.stream()
                                     .forEach(t -> addCount(t)));
