@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
+import pl.michalskrzypek.LearningPlatform.common.Roles;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -60,7 +61,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER", "ROLE_INSTRUCTOR");
+        return AuthorityUtils.createAuthorityList(Roles.ROLE_ADMIN, Roles.ROLE_INSTRUCTOR, Roles.ROLE_USER);
     }
 
     @JsonIgnore

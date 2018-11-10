@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.dtos.UserDto;
+import pl.michalskrzypek.LearningPlatform.dtos.converters.UserDtoConverter;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.exceptions.UserNotFoundException;
@@ -20,13 +21,12 @@ import java.util.List;
 @Service
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private BCryptPasswordEncoder encoder;
-
+    private UserDtoConverter userDtoConverter;
     private UserRepository userRepository;
     private CourseRepository courseRepository;
 
-    public UserService(UserRepository userRepository, CourseRepository courseRepository) {
+    public UserService(UserDtoConverter userDtoConverter, UserRepository userRepository, CourseRepository courseRepository) {
+        this.userDtoConverter = userDtoConverter;
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
     }
@@ -59,12 +59,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User saveUser(UserDto newUser) {
-        User registeredUser = new User();
-        registeredUser.setEmail(newUser.getEmail());
-        registeredUser.setPassword(encoder.encode(newUser.getPassword()));
-        registeredUser.setFirstName(newUser.getFirstName());
-        registeredUser.setLastName(newUser.getLastName());
-        registeredUser.setRole(newUser.getRole());
+        User registeredUser = userDtoConverter.convert(newUser);
         return userRepository.save(registeredUser);
     }
 

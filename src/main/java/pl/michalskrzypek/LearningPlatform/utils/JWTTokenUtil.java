@@ -4,16 +4,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Following is the util class to generate the auth token as well as to extract username from the token.
@@ -30,7 +25,7 @@ public class JWTTokenUtil implements Serializable {
     public String generateToken(User user) {
         Claims claims = Jwts.claims();
         claims.setSubject(user.getEmail());
-        claims.put("scope", user.getRole());
+        claims.put("role", user.getRole());
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -55,6 +50,10 @@ public class JWTTokenUtil implements Serializable {
 
     public String getUsernameFromToken(String token) {
         return getAllClaimsFromToken(token).getSubject();
+    }
+
+    public String getRoleFromToken(String token) {
+        return (String) getAllClaimsFromToken(token).get("role");
     }
 
     public Date getExpirationDateFromToken(String token) {
