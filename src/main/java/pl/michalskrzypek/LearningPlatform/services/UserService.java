@@ -1,6 +1,5 @@
 package pl.michalskrzypek.LearningPlatform.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +19,8 @@ import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     private UserDtoConverter userDtoConverter;
     private UserRepository userRepository;
@@ -60,6 +61,7 @@ public class UserService implements UserDetailsService {
 
     public User saveUser(UserDto newUser) {
         User registeredUser = userDtoConverter.convert(newUser);
+        registeredUser.setPassword(encoder.encode(newUser.getPassword()));
         return userRepository.save(registeredUser);
     }
 

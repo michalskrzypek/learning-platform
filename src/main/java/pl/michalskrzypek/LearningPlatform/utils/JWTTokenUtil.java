@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.michalskrzypek.LearningPlatform.entities.User;
+import pl.michalskrzypek.LearningPlatform.services.UserService;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,9 +19,14 @@ public class JWTTokenUtil implements Serializable {
 
     @Value("${SIGNING_KEY}")
     private String signingKey;
-
     @Value("${ACCESS_TOKEN_VALIDITY_SECONDS}")
     private int accessTokenValiditySeconds;
+
+    private UserService userService;
+
+    public JWTTokenUtil (UserService userService){
+        this.userService = userService;
+    }
 
     public String generateToken(User user) {
         Claims claims = Jwts.claims();
@@ -36,11 +42,8 @@ public class JWTTokenUtil implements Serializable {
                 .compact();
     }
 
-    public Boolean validateToken(String token, User user) {
-        final String username = getUsernameFromToken(token);
-        return (
-                username.equals(user.getUsername())
-                        && !isTokenExpired(token));
+    public Boolean validateToken(String token) {
+        return (!isTokenExpired(token) && getUserFromToken(token) != null);
     }
 
     private Boolean isTokenExpired(String token) {
@@ -48,15 +51,19 @@ public class JWTTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String getUsernameFromToken(String token) {
+    public User getUserFromToken(String token) {
+        return (User) userService.loadUserByUsername(getUsernameFromToken(token));
+    }
+
+    private String getUsernameFromToken(String token) {
         return getAllClaimsFromToken(token).getSubject();
     }
 
-    public String getRoleFromToken(String token) {
+    private String getRoleFromToken(String token) {
         return (String) getAllClaimsFromToken(token).get("role");
     }
 
-    public Date getExpirationDateFromToken(String token) {
+    private Date getExpirationDateFromToken(String token) {
         return getAllClaimsFromToken(token).getExpiration();
     }
 

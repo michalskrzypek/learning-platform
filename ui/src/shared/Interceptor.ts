@@ -35,9 +35,10 @@ export class Interceptor implements HttpInterceptor {
       authReq = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + this.token.getToken())});
     }
 
-    return next.handle(authReq).do((event: HttpEvent<any>) => {
-      if(event instanceof HttpResponse) {
-      }},
+    return next.handle(authReq).do(
+      (event: HttpEvent<any>) => {
+        if(event instanceof HttpResponse) {
+        }},
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
           this.errorDetails = err.error;
