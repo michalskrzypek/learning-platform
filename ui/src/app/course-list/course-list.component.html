@@ -32,33 +32,18 @@
     </div>
   </div>
 
-  <!-- <div class="text-center">
-     <ul class="pagination"> &lt;!&ndash;*ngIf="pager.totalElements > 0" &ndash;&gt;
-       <li [ngClass]="{disabled: pager.first}">
-         <a> &lt;!&ndash;(click)="filterChanged({}, 1)"&ndash;&gt;First</a>
-       </li>
-       <li [ngClass]="{disabled: pager.first}">
-         <a> &lt;!&ndash;(click)="filterChanged({}, pager.currentPage - 1)"&ndash;&gt;Poprzednia</a>
-       </li>
-       <li *ngFor="let pageNumber of pager.totalPages" [ngClass]="{active:pager.number === pageNumber}">
-         <a> &lt;!&ndash;(click)="filterChanged({}, pageNumber)">&ndash;&gt;{{pageNumber}}</a>
-       </li>
-       <li [ngClass]="{disabled: pager.last}">
-         <a> &lt;!&ndash;(click)="filterChanged({}, pager.currentPage + 1)">&ndash;&gt;Następna</a>
-       </li>
-       <li [ngClass]="{disabled: pager.last}">
-         <a>&lt;!&ndash; (click)="filterChanged({}, pager.totalPages)">&ndash;&gt;Ostatnia</a>
-       </li>
-     </ul>
-   </div>-->
-
   <nav aria-label="Page navigation example">
     <ul class="pagination">
-      <li class="page-item" [ngClass] = "{disabled: pager.first}"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item" *ngFor="let a of counter(pager.totalPages); let pageIndex = index" [ngClass] = "{disabled: pager.number == pageIndex}">
+      <li class="page-item" [ngClass]="{disabled: pager.first}">
+        <a class="page-link"(click)="changePage(pager.number - 1)">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let a of counter(pager.totalPages); let pageIndex = index"
+          [ngClass]="{disabled: pager.number == pageIndex}" (click)="changePage(pageIndex)">
         <a class="page-link">{{pageIndex + 1}}</a>
       </li>
-      <li class="page-item" [ngClass] = "{disabled: pager.last}"><a class="page-link" href="#">Next</a></li>
+      <li class="page-item" [ngClass]="{disabled: pager.last}">
+        <a class="page-link" (click)="changePage(pager.number + 1)">Next</a>
+      </li>
     </ul>
   </nav>
 
