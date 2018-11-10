@@ -41,6 +41,8 @@ public class CourseService {
         course.setInstructor(instructor);
         courseRepository.save(course);
 
+        increaseCorrespondingCounts(course);
+
         mailService.notifyUser(instructor, MailType.NEW_COURSE);
         return course;
     }
@@ -60,7 +62,13 @@ public class CourseService {
     }
 
     public void increaseCorrespondingCounts(Course course) {
-        categoryService.increaseCount(course.getCategory(), 1);
         tagService.addCount(course.getTags());
+        updateCategoryCount(course.getCategory());
     }
+
+    private void updateCategoryCount(Category category){
+        int numberOfCoursesOfTheCategory = courseRepository.countAllByCategory(category);
+        category.setCount(numberOfCoursesOfTheCategory);
+    }
+
 }

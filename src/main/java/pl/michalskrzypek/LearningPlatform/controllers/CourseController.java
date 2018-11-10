@@ -48,7 +48,6 @@ public class CourseController {
                 .ifPresent(tags -> tagService.saveNewTags(courseDto.getTags()));
 
         Course newCourse = courseService.save(courseDto);
-        courseService.increaseCorrespondingCounts(newCourse);
         return newCourse;
     }
 }

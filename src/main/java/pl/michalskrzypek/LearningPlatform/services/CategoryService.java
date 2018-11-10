@@ -32,10 +32,4 @@ public class CategoryService {
     public Category getCategoryByName(String categoryName) {
         return categoryRepository.findByName(categoryName).orElseThrow(() -> new CategoryNotFoundException(categoryName));
     }
-
-    public void increaseCount(Category category, int incValue) {
-        int newCount = category.getCount() + incValue;
-        category.setCount(newCount);
-        categoryRepository.save(category);
-    }
 }

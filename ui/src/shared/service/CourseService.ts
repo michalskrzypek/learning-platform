@@ -17,12 +17,12 @@ export class CourseService {
   }
 
   findAllByCategory(category: string, pager: Pager) : Observable<any>{
-    let params = new HttpParams().append('page', new String(pager.number)).append('size', new String(pager.size));
+    let params = new HttpParams().append('page', pager.number).append('size', pager.size);
     return this.http.get(this.apiRoot + '/' + category, {params : params});
   }
 
   findAll(pager: Pager) : Observable<any>{
-    let params = new HttpParams().append('page', new String(pager.number)).append('size', new String(pager.size));
+    let params = new HttpParams().append('page', pager.number).append('size', pager.size);
     return this.http.get(this.apiRoot, {params : params});
   }
 
