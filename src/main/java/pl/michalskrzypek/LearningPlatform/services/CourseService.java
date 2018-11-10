@@ -34,6 +34,7 @@ public class CourseService {
         this.mailService = mailService;
     }
 
+<<<<<<< HEAD
     public Course save(CourseDto courseDto) {
         Course course = courseDtoConverter.convert(courseDto);
 
@@ -49,6 +50,12 @@ public class CourseService {
 
     public Page<Course> getAll(Pageable pageable) {
         return courseRepository.findAll(pageable);
+=======
+    public List<Course> findAll() {
+        List<Course> allCourses = new ArrayList<>();
+        courseRepository.findAll().forEach(c -> allCourses.add(c));
+        return allCourses;
+>>>>>>> features-course-deletion
     }
 
     public Page<Course> getAllByCategory(String categoryName, Pageable pageable) {
@@ -56,14 +63,64 @@ public class CourseService {
         return courseRepository.findByCategory(category, pageable);
     }
 
+<<<<<<< HEAD
     public Course getById(Long id) {
         return courseRepository.findById(id)
+=======
+    public Course save(CourseDto courseDto) {
+        saveNewTags(courseDto);
+
+        Course course = courseDtoConverter.convert(courseDto);
+        User instructor = userService.getCurrentUser();
+        course.setInstructor(instructor);
+        Course savedCourse = courseRepository.save(course);
+
+        increaseCorrespondingCounts(savedCourse);
+        notifyInstructorAboutCreatedCourse(instructor);
+
+        return course;
+    }
+
+    private void saveNewTags(CourseDto courseDto) {
+        Optional.ofNullable(courseDto.getTags())
+                .ifPresent(tags -> tagService.saveNewTags(courseDto.getTags()));
+    }
+
+    private void increaseCorrespondingCounts(Course course) {
+        categoryService.increaseCount(course.getCategory());
+        tagService.increaseCount(course.getTags());
+    }
+
+    private void notifyInstructorAboutCreatedCourse(User instructor) {
+        mailService.notifyUser(instructor, MailType.NEW_COURSE);
+    }
+
+    public void deleteCourse(Long id) {
+        Course courseToDelete = findById(id);
+        decreaseCorrespondingCounts(courseToDelete);
+        notifyInstructorAboutDeletedCourse(courseToDelete.getInstructor());
+        courseRepository.delete(courseToDelete);
+    }
+
+    public Course findById(Long id) {
+        Course course = courseRepository.findById(id)
+>>>>>>> features-course-deletion
                 .orElseThrow(() -> new CourseNotFoundException(id));
     }
 
+<<<<<<< HEAD
     public void increaseCorrespondingCounts(Course course) {
         tagService.addCount(course.getTags());
         updateCategoryCount(course.getCategory());
+=======
+    private void decreaseCorrespondingCounts(Course course) {
+        categoryService.decreaseCount(course.getCategory());
+        tagService.decreaseCount(course.getTags());
+    }
+
+    private void notifyInstructorAboutDeletedCourse(User instructor) {
+        mailService.notifyUser(instructor, MailType.DELETED_COURSE);
+>>>>>>> features-course-deletion
     }
 
     private void updateCategoryCount(Category category){

@@ -29,7 +29,20 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+<<<<<<< HEAD
     public Category getCategoryByName(String categoryName) {
         return categoryRepository.findByName(categoryName).orElseThrow(() -> new CategoryNotFoundException(categoryName));
+=======
+    public void increaseCount(Category category){
+        int newCount = category.getCount() + 1;
+        category.setCount(newCount);
+        categoryRepository.save(category);
+>>>>>>> features-course-deletion
+    }
+
+    public void decreaseCount(Category category){
+        int newCount = category.getCount() - 1;
+        category.setCount(newCount);
+        categoryRepository.save(category);
     }
 }

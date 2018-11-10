@@ -23,7 +23,11 @@ public class AuthTokenController {
     private JWTTokenUtil jwtTokenUtil;
     private UserService userService;
 
+<<<<<<< HEAD:src/main/java/pl/michalskrzypek/LearningPlatform/controllers/AuthTokenController.java
     public AuthTokenController(AuthenticationManager authenticationManager, JWTTokenUtil jwtTokenUtil, UserService userService){
+=======
+    public AuthController(AuthenticationManager authenticationManager, JWTTokenUtil jwtTokenUtil, UserService userService){
+>>>>>>> features-course-deletion:src/main/java/pl/michalskrzypek/LearningPlatform/controllers/AuthController.java
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userService = userService;

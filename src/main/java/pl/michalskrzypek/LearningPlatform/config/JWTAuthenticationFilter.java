@@ -1,7 +1,6 @@
 package pl.michalskrzypek.LearningPlatform.config;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,7 +9,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import pl.michalskrzypek.LearningPlatform.entities.User;
-import pl.michalskrzypek.LearningPlatform.services.UserService;
 import pl.michalskrzypek.LearningPlatform.utils.JWTTokenUtil;
 
 import javax.servlet.FilterChain;
@@ -30,21 +28,22 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private String headerString;
     @Value("${TOKEN_PREFIX}")
     private String tokenPrefix;
-    @Autowired
-    private UserService userService;
-    @Autowired
+
     private JWTTokenUtil JWTTokenUtil;
+
+    public JWTAuthenticationFilter(JWTTokenUtil JWTTokenUtil) {
+        this.JWTTokenUtil = JWTTokenUtil;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         String header = req.getHeader(headerString);
-        String username = null;
-        String authToken = null;
+        String authToken;
 
         if (header != null && header.startsWith(tokenPrefix)) {
             authToken = header.replace(tokenPrefix, "");
             try {
-                username = JWTTokenUtil.getUsernameFromToken(authToken);
+                setAuthentication(authToken, req);
             } catch (IllegalArgumentException e) {
                 logger.error("An error occurred during getting username from token", e);
             } catch (ExpiredJwtException e) {
@@ -53,24 +52,21 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         } else {
             logger.warn("There is no JWT put in the request header!");
         }
-        setAuthentication(username, authToken, req);
         chain.doFilter(req, res);
     }
 
-    private void setAuthentication(String username, String authToken, HttpServletRequest req) {
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            User user = (User) userService.loadUserByUsername(username);
-            if (JWTTokenUtil.validateToken(authToken, user)) {
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                user,
-                                null,
-                                Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
+    private void setAuthentication(String authToken, HttpServletRequest req) {
+        if (SecurityContextHolder.getContext().getAuthentication() == null && JWTTokenUtil.validateToken(authToken)) {
+            User user = JWTTokenUtil.getUserFromToken(authToken);
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            user,
+                            null,
+                            Arrays.asList(new SimpleGrantedAuthority(user.getRole())));
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                logger.info("Authenticated user " + username + ", setting security context");
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
+            logger.info("Authenticated user " + user.getUsername() + ", setting security context");
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
     }
 }

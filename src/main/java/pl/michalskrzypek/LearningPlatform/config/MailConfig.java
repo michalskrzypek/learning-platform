@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class MailConfig {
 
     private MailConfigEntry courseCreated;
+    private MailConfigEntry courseDeleted;
 
     @Data
     public static class MailConfigEntry {

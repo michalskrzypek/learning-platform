@@ -31,6 +31,7 @@ public class CourseController {
     }
 
     @GetMapping(params = {"id"})
+    @ResponseStatus(HttpStatus.OK)
     public Course getCourseById(@RequestParam Long id) {
         return courseService.getById(id);
     }
@@ -43,11 +44,23 @@ public class CourseController {
     @PostMapping
     @IsAdminOrInstructor
     @ResponseStatus(HttpStatus.CREATED)
+<<<<<<< HEAD
     public Course addCourse(@Valid @RequestBody CourseDto courseDto) {
         Optional.ofNullable(courseDto.getTags())
                 .ifPresent(tags -> tagService.saveNewTags(courseDto.getTags()));
 
         Course newCourse = courseService.save(courseDto);
         return newCourse;
+=======
+    public Course addNewCourse(@Valid @RequestBody CourseDto courseDto) {
+        return courseService.save(courseDto);
+    }
+
+    @DeleteMapping("/{courseId}")
+    @IsAdminOrInstructor
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCourse(@PathVariable Long courseId){
+        courseService.deleteCourse(courseId);
+>>>>>>> features-course-deletion
     }
 }
