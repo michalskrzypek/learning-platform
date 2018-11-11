@@ -2,16 +2,22 @@ package pl.michalskrzypek.LearningPlatform.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import pl.michalskrzypek.LearningPlatform.dtos.CourseDto;
 import pl.michalskrzypek.LearningPlatform.dtos.converters.CourseDtoConverter;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
+import pl.michalskrzypek.LearningPlatform.entities.Tag;
 import pl.michalskrzypek.LearningPlatform.entities.User;
 import pl.michalskrzypek.LearningPlatform.enums.MailType;
 import pl.michalskrzypek.LearningPlatform.exceptions.CourseNotFoundException;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 import pl.michalskrzypek.LearningPlatform.services.mails.MailService;
+
+import java.time.Clock;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CourseService {
@@ -34,28 +40,9 @@ public class CourseService {
         this.mailService = mailService;
     }
 
-<<<<<<< HEAD
-    public Course save(CourseDto courseDto) {
-        Course course = courseDtoConverter.convert(courseDto);
-
-        User instructor = userService.getCurrentUser();
-        course.setInstructor(instructor);
-        courseRepository.save(course);
-
-        increaseCorrespondingCounts(course);
-
-        mailService.notifyUser(instructor, MailType.NEW_COURSE);
-        return course;
-    }
 
     public Page<Course> getAll(Pageable pageable) {
         return courseRepository.findAll(pageable);
-=======
-    public List<Course> findAll() {
-        List<Course> allCourses = new ArrayList<>();
-        courseRepository.findAll().forEach(c -> allCourses.add(c));
-        return allCourses;
->>>>>>> features-course-deletion
     }
 
     public Page<Course> getAllByCategory(String categoryName, Pageable pageable) {
@@ -63,10 +50,6 @@ public class CourseService {
         return courseRepository.findByCategory(category, pageable);
     }
 
-<<<<<<< HEAD
-    public Course getById(Long id) {
-        return courseRepository.findById(id)
-=======
     public Course save(CourseDto courseDto) {
         saveNewTags(courseDto);
 
@@ -87,8 +70,8 @@ public class CourseService {
     }
 
     private void increaseCorrespondingCounts(Course course) {
-        categoryService.increaseCount(course.getCategory());
         tagService.increaseCount(course.getTags());
+        updateCategoryCount(course.getCategory());
     }
 
     private void notifyInstructorAboutCreatedCourse(User instructor) {
@@ -96,36 +79,36 @@ public class CourseService {
     }
 
     public void deleteCourse(Long id) {
-        Course courseToDelete = findById(id);
-        decreaseCorrespondingCounts(courseToDelete);
-        notifyInstructorAboutDeletedCourse(courseToDelete.getInstructor());
+        Course courseToDelete = getById(id);
+        Set<Tag> tagsOfDeletedCourse = courseToDelete.getTags();
+        Category categoryOfDeletedCourse = courseToDelete.getCategory();
+        User courseInstructor = courseToDelete.getInstructor();
+
         courseRepository.delete(courseToDelete);
+
+        tagsOfDeletedCourse.forEach(t -> System.out.print(t.getName()));
+        decreaseCorrespondingCounts(categoryOfDeletedCourse, tagsOfDeletedCourse);
+        notifyInstructorAboutDeletedCourse(courseInstructor);
     }
 
-    public Course findById(Long id) {
-        Course course = courseRepository.findById(id)
->>>>>>> features-course-deletion
+    public Course getById(Long id) {
+        return courseRepository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException(id));
     }
 
-<<<<<<< HEAD
-    public void increaseCorrespondingCounts(Course course) {
-        tagService.addCount(course.getTags());
-        updateCategoryCount(course.getCategory());
-=======
-    private void decreaseCorrespondingCounts(Course course) {
-        categoryService.decreaseCount(course.getCategory());
-        tagService.decreaseCount(course.getTags());
+    private void decreaseCorrespondingCounts(Category category, Set<Tag> tags) {
+        tagService.decreaseCount(tags);
+        updateCategoryCount(category);
     }
 
-    private void notifyInstructorAboutDeletedCourse(User instructor) {
-        mailService.notifyUser(instructor, MailType.DELETED_COURSE);
->>>>>>> features-course-deletion
-    }
-
-    private void updateCategoryCount(Category category){
-        int numberOfCoursesOfTheCategory = courseRepository.countAllByCategory(category);
+    private void updateCategoryCount(Category category) {
+        Integer numberOfCoursesOfTheCategory = courseRepository.countAllByCategory(category);
         category.setCount(numberOfCoursesOfTheCategory);
+        categoryService.updateCategory(category);
     }
 
+    @Async
+    void notifyInstructorAboutDeletedCourse(User instructor) {
+        mailService.notifyUser(instructor, MailType.DELETED_COURSE);
+    }
 }

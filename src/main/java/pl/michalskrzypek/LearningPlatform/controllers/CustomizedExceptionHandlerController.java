@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import pl.michalskrzypek.LearningPlatform.common.ErrorDetails;
 import pl.michalskrzypek.LearningPlatform.exceptions.CategoryNotFoundException;
+import pl.michalskrzypek.LearningPlatform.exceptions.CourseNotFoundException;
 
 import java.util.Date;
 
@@ -44,6 +45,13 @@ public class CustomizedExceptionHandlerController {
     @ExceptionHandler(CategoryNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorDetails invalidCategoryName(CategoryNotFoundException exception){
+        String message = exception.getMessage();
+        return ErrorDetails.builder().message(message).build();
+    }
+
+    @ExceptionHandler(CourseNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDetails invalidCategoryName(CourseNotFoundException exception){
         String message = exception.getMessage();
         return ErrorDetails.builder().message(message).build();
     }

@@ -24,7 +24,6 @@ public class MailService {
         this.mailTemplateConverter = mailTemplateConverter;
     }
 
-    @Async
     public void notifyUser(User user, MailType mailType) {
         MailTemplate mailTemplate = mailTemplateFactory.createMailTemplate(mailType);
         Mail mail = mailTemplateConverter.createMail(user.getEmail(), mailTemplate);

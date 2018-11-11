@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 import pl.michalskrzypek.LearningPlatform.entities.Category;
 import pl.michalskrzypek.LearningPlatform.entities.Course;
 
-import java.util.List;
-
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Long> {
     Integer countAllByCategory(Category category);
