@@ -86,7 +86,6 @@ public class CourseService {
 
         courseRepository.delete(courseToDelete);
 
-        tagsOfDeletedCourse.forEach(t -> System.out.print(t.getName()));
         decreaseCorrespondingCounts(categoryOfDeletedCourse, tagsOfDeletedCourse);
         notifyInstructorAboutDeletedCourse(courseInstructor);
     }
@@ -96,7 +95,8 @@ public class CourseService {
                 .orElseThrow(() -> new CourseNotFoundException(id));
     }
 
-    private void decreaseCorrespondingCounts(Category category, Set<Tag> tags) {
+    @Async
+    void decreaseCorrespondingCounts(Category category, Set<Tag> tags) {
         tagService.decreaseCount(tags);
         updateCategoryCount(category);
     }

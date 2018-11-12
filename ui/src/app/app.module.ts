@@ -25,6 +25,7 @@ import {AutoSizeDirective} from "../shared/directive/AutoSizeDirective";
 import {TagInputModule} from "ngx-chips";
 import { MyCoursesComponent } from './my-courses/my-courses.component';
 import {UserService} from "../shared/service/UserService";
+import { CoursesManagementComponent } from './courses-management/courses-management.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {UserService} from "../shared/service/UserService";
     CourseListComponent,
     CourseFormComponent,
     MyCoursesComponent,
+    CoursesManagementComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import {UserService} from "../shared/service/UserService";
       {path: "courses/:category", component: CourseListComponent},
       {path: "my-courses", component: MyCoursesComponent},
       {path: "login", component: LoginComponent},
-      {path: "signup", component: SignupComponent}
+      {path: "signup", component: SignupComponent},
+      {path: "admin/courses", component: CoursesManagementComponent}
     ]),
     TagInputModule,
     ToastrModule.forRoot({

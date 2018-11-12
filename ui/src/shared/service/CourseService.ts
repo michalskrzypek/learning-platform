@@ -17,13 +17,23 @@ export class CourseService {
   }
 
   findAllByCategory(category: string, pager: Pager) : Observable<any>{
-    let params = new HttpParams().append('page', pager.number).append('size', pager.size);
+    let params = new HttpParams().append('page', pager.number.toString()).append('size', pager.size.toString());
+    if(pager.sortBy != null){
+      params.append('sort', pager.sortBy);
+    }
     return this.http.get(this.apiRoot + '/' + category, {params : params});
   }
 
   findAll(pager: Pager) : Observable<any>{
-    let params = new HttpParams().append('page', pager.number).append('size', pager.size);
+    let params = new HttpParams().append('page', pager.number.toString()).append('size', pager.size.toString());
+    if(pager.sortBy != null){
+      params.append('sort', pager.sortBy);
+    }
     return this.http.get(this.apiRoot, {params : params});
+  }
+
+  delete(courseId: number): Observable<any>{
+    return this.http.delete(this.apiRoot + "/" + courseId);
   }
 
 }

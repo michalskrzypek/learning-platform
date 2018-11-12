@@ -10,4 +10,5 @@ export class Pager {
     unsorted: boolean
   };
   numberOfElements: number;
+  sortBy: string;
 }

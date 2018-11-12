@@ -5,7 +5,7 @@ export class Course {
   title: string;
   description: string;
   category: Category;
-  purchases: number;
+  enrollments: number;
   tags: string[];
   reviews: any[];
 }
