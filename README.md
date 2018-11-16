@@ -34,16 +34,15 @@ Single Page Application (SPA) based on Spring framework (Boot, Data, Security) +
 ### Adding new course: only admin and instructors have the possibility to add new courses. 
 ![alt text](https://i.imgur.com/8C77Jf3.png)
 
-![alt text](https://i.imgur.com/pJdsN2Q.png)
+### Once created, we can see the course in the list of all courses AND a mail with confirmation is sent to the course creator.
+![alt text](https://i.imgur.com/akQrYxc.png)
+![alt text](https://i.imgur.com/QVMzm2c.png)
 
-![alt text](https://i.imgur.com/VOP9VAU.png)
+### Admin can also manage all the courses (edit or delete them)
+![alt text](https://i.imgur.com/CIgR14u.png)
 
-![alt text](https://i.imgur.com/14zTEAt.png)
-
-#### Manager access:
-![alt text](https://i.imgur.com/ZTzynOg.png)
-
-![alt text](https://i.imgur.com/Rt5vQqo.png)
-
+## How can you use the application?
+For right now, you can only download the source code, change the PostgreSQL database credentials in properties and run the application.
+Then you must run the Angular application via Angular CLI (just provide 'ng serve' in the bash). And that is it! Your application works on the localhost at the 4200 port.
 
 
