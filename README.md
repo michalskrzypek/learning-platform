@@ -38,6 +38,8 @@ Single Page Application (SPA) based on Spring framework (Boot, Data, Security) +
 ![alt text](https://i.imgur.com/akQrYxc.png)
 ![alt text](https://i.imgur.com/QVMzm2c.png)
 
+Users can add courses to their library.
+
 ### Admin can also manage all the courses (edit or delete them)
 ![alt text](https://i.imgur.com/CIgR14u.png)
 
