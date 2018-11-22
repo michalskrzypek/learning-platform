@@ -15,7 +15,6 @@ import pl.michalskrzypek.LearningPlatform.exceptions.CourseNotFoundException;
 import pl.michalskrzypek.LearningPlatform.repositories.CourseRepository;
 import pl.michalskrzypek.LearningPlatform.services.mails.MailService;
 
-import java.time.Clock;
 import java.util.Optional;
 import java.util.Set;
 

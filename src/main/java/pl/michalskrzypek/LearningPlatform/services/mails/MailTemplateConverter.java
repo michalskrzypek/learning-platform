@@ -6,12 +6,12 @@ import org.thymeleaf.context.Context;
 import pl.michalskrzypek.LearningPlatform.common.Mail;
 
 /**
- * Class responsible for processing MailTemplates to final reade-to-sent Mails
+ * Class responsible for processing MailTemplates to the final reade-to-sent mails of the class Mail
  */
 @Component
 public class MailTemplateConverter {
 
-    private static TemplateEngine templateEngine;
+    private TemplateEngine templateEngine;
 
     public MailTemplateConverter(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;

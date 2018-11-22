@@ -7,9 +7,9 @@ import pl.michalskrzypek.LearningPlatform.services.mails.MailTemplate;
 @Component
 public class NewCourseMailTemplate extends MailTemplate {
 
-    MailConfig mailConfig;
+    private MailConfig mailConfig;
 
-    public NewCourseMailTemplate(MailConfig mailConfig) {
+    private NewCourseMailTemplate(MailConfig mailConfig) {
         this.mailConfig = mailConfig;
     }
 

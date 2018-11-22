@@ -17,7 +17,7 @@ import java.util.Date;
 
 @ControllerAdvice
 @ResponseBody
-public class CustomizedExceptionHandlerController {
+public class ExceptionHandlerController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
