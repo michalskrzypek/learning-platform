@@ -9,7 +9,7 @@ Single Page Application (SPA) based on Spring framework (Boot, Data, Security) +
 •	Spring Mail
 •	Custom method annotations 
 •	Customized Exception Handler (together with custom exceptions)
-•	OOP Design Patterns (e.g. Factory design pattern -> Check MailTemplateFactory implementation)
+•	OOP Design Patterns (e.g. Observer, Factory, Builder  -> Check MailTemplateFactory implementation)
 •	Clean code principles
 •	Optionals
 •	Streams
