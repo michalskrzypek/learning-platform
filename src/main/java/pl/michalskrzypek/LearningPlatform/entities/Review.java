@@ -17,7 +17,6 @@ public class Review {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     @NotNull
@@ -30,4 +29,8 @@ public class Review {
 
     @NotNull
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @NotNull
+    @ManyToOne
+    private Course course;
 }

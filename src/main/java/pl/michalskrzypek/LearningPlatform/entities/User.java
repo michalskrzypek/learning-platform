@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -42,23 +43,21 @@ public class User implements UserDetails, Serializable {
     private boolean expired = false;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "assigned_users")
-/*    @JoinTable(name = "course_user",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))*/
-    private List<Course> assigned_courses;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "assigned_users")
+    private Set<Course> assigned_courses;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "instructor",
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Course> designed_courses;
+    private List<Course> created_courses;
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return AuthorityUtils.createAuthorityList(Roles.ROLE_ADMIN, Roles.ROLE_INSTRUCTOR, Roles.ROLE_USER);
