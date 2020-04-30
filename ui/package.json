@@ -24,7 +24,7 @@
     "bootstrap": "^4.1.1",
     "cookie": "^0.3.1",
     "core-js": "^2.5.4",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "lodash": "latest",
     "ngx-chips": "^1.9.7",
     "ngx-toastr": "^9.0.2",
